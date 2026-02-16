@@ -2,11 +2,8 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Show Excursió : {{ $trek->name }}
+                Show Trek : {{ $trek->name }}
             </h2>
-            <a href="{{ route('treks.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md text-xs uppercase font-bold transition">
-                Tornar al llistat
-            </a>
         </div>
     </x-slot>
 
@@ -19,8 +16,8 @@
                 </div>
 
                 <div class="text-sm text-gray-600 space-y-1 mb-6">
-                    <p><span class="font-bold">Distància:</span> {{ $trek->distance }} km</p>
-                    <p><span class="font-bold">Durada:</span> {{ $trek->duration }} minuts</p>
+                    <p><span class="font-bold">Distance:</span> {{ $trek->distance }} km</p>
+                    <p><span class="font-bold">Duration:</span> {{ $trek->duration }} minutes</p>
                     <p class="italic py-2 text-gray-500">{{ $trek->description }}</p>
                     
                     <div class="mt-4 pt-4 border-t border-gray-100 text-xs text-gray-400">
@@ -32,7 +29,7 @@
                 <div class="flex gap-2">
                     <a href="{{ route('treks.show', $trek->id) }}" class="bg-green-500 hover:bg-green-600 text-white px-4 py-1 rounded text-sm font-bold transition">Show</a>
                     <a href="{{ route('treks.edit', $trek->id) }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded text-sm font-bold transition">Edit</a>
-                    <form action="{{ route('treks.destroy', $trek->id) }}" method="POST" onsubmit="return confirm('Esborrar excursió?')">
+                    <form action="{{ route('treks.destroy', $trek->id) }}" method="POST" onsubmit="return confirm('Delete trek?')">
                         @csrf @method('DELETE')
                         <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded text-sm font-bold transition absolute bottom-8 right-8">Delete</button>
                     </form>

@@ -1,36 +1,34 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Gestió d'Excursions</h2>
-            <a href="{{ route('treks.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-xs uppercase font-bold transition">Nueva Excursió</a>
-        </div>
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">List of Treks</h2>
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            @foreach($treks as $trek)
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-8 relative">
-                <div class="mb-4">
-                    <h3 class="text-lg font-bold uppercase text-gray-700">{{ $trek->name }}</h3>
-                    <p class="text-sm text-blue-600 font-bold italic">{{ $trek->difficulty }}</p>
-                </div>
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                @foreach($treks as $trek)
+                <div class="p-8 relative">
+                    <div class="mb-4">
+                        <h3 class="text-lg font-bold uppercase text-gray-700">{{ $trek->name }}</h3>
+                        <p class="text-md text-blue-600 font-bold italic">{{ $trek->difficulty }}</p>
+                    </div>
 
-                <div class="text-sm text-gray-600 space-y-1 mb-6">
-                    <p><span class="font-bold">Distància:</span> {{ $trek->distance }} km</p>
-                    <p><span class="font-bold">Durada:</span> {{ $trek->duration }} minuts</p>
-                    <p><span class="font-bold">Descripció:</span> {{ Str::limit($trek->description, 100) }}</p>
-                </div>
+                    <div class="text-sm text-gray-600 space-y-1 mb-6">
+                        <p><span class="font-bold">Distance:</span> {{ $trek->distance }} km</p>
+                        <p><span class="font-bold">Duration:</span> {{ $trek->duration }} minutes</p>
+                    </div>
 
-                <div class="flex gap-2">
-                    <a href="{{ route('treks.show', $trek->id) }}" class="bg-green-500 hover:bg-green-600 text-white px-4 py-1 rounded text-sm font-bold transition">Show</a>
-                    <a href="{{ route('treks.edit', $trek->id) }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded text-sm font-bold transition">Edit</a>
-                    <form action="{{ route('treks.destroy', $trek->id) }}" method="POST" onsubmit="return confirm('Borrar excursió?')">
-                        @csrf @method('DELETE')
-                        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded text-sm font-bold transition absolute bottom-8 right-8">Delete</button>
-                    </form>
+                    <div class="flex gap-2">
+                        <a href="{{ route('treks.show', $trek->id) }}" class="bg-green-500 hover:bg-green-600 text-white px-4 py-1 rounded text-sm font-bold transition">Show</a>
+                        <a href="{{ route('treks.edit', $trek->id) }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded text-sm font-bold transition">Edit</a>
+                        <form action="{{ route('treks.destroy', $trek->id) }}" method="POST" onsubmit="return confirm('Delete trek?')">
+                            @csrf @method('DELETE')
+                            <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded text-sm font-bold transition absolute bottom-8 right-8">Delete</button>
+                        </form>
+                    </div>
                 </div>
+                @endforeach
             </div>
-            @endforeach
             <div class="mt-8">{{ $treks->links() }}</div>
         </div>
     </div>

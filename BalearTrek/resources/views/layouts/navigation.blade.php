@@ -19,14 +19,26 @@
     <x-nav-link :href="route('interesting-places.index')" :active="request()->routeIs('interesting-places.*')">
         {{ __('Interesting Places') }}
     </x-nav-link>
+    <x-nav-link :href="route('interesting-places.create')" :active="request()->routeIs('interesting-places.create')">
+        {{ __('New Place') }}
+    </x-nav-link>
     <x-nav-link :href="route('municipis.index')" :active="request()->routeIs('municipis.*')">
         {{ __('Municipalities') }}
+    </x-nav-link>
+    <x-nav-link :href="route('municipis.create')" :active="request()->routeIs('municipis.create')">
+        {{ __('New Municipality') }}
     </x-nav-link>
     <x-nav-link :href="route('treks.index')" :active="request()->routeIs('treks.*')">
         {{ __('Treks') }}
     </x-nav-link>
+    <x-nav-link :href="route('treks.create')" :active="request()->routeIs('treks.create')">
+        {{ __('New Trek') }}
+    </x-nav-link>
     <x-nav-link :href="route('meetings.index')" :active="request()->routeIs('meetings.*')">
         {{ __('Meetings') }}
+    </x-nav-link>
+    <x-nav-link :href="route('meetings.create')" :active="request()->routeIs('meetings.create')">
+        {{ __('New Meeting') }}
     </x-nav-link>
 </div>
 

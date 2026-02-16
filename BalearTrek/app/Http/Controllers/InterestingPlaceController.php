@@ -10,8 +10,12 @@ class InterestingPlaceController extends Controller
 {
     public function index()
     {
-        $places = InterestingPlace::with('placeType')->paginate(10);
-        return view('interesting_places.index', compact('places'));
+        // 1. La variable se llama $interestingPlaces (en plural)
+        $interestingPlaces = InterestingPlace::with('placeType')->paginate(10);
+
+        // 2. La vista usa puntos para las carpetas y guion bajo para el archivo
+        // 3. Pasamos 'interestingPlaces' (el mismo nombre que arriba)
+        return view('interesting_places.index', compact('interestingPlaces'));
     }
 
     public function create()
@@ -60,12 +64,9 @@ class InterestingPlaceController extends Controller
 
         return redirect()->route('interesting-places.index')->with('success', 'Lloc eliminat correctament');
     }
-    public function show($id)
-{
-    // Buscamos el lugar con su relación para evitar errores
-    $place = InterestingPlace::with('placeType')->findOrFail($id);
-
-    // Es vital que el nombre en compact() coincida con el de la vista
-    return view('interesting_places.show', compact('place'));
-}
+    public function show(string $id)
+    {
+        $interestingPlace = InterestingPlace::findOrFail($id);
+        return view('interesting_places.show', compact('interestingPlace'));
+    }
 }

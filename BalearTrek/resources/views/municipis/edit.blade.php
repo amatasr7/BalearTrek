@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Editar Municipi') }} : {{ $municipi->name }}
+            {{ __('Edit Municipality') }} : {{ $municipi->name }}
         </h2>
     </x-slot>
 
@@ -13,13 +13,13 @@
                     @method('PUT')
                     
                     <div class="mb-4">
-                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nom del Municipi</label>
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name of the Municipality</label>
                         <input type="text" name="name" id="name" value="{{ old('name', $municipi->name) }}" 
                             class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
                     </div>
 
                     <div class="mb-4">
-                        <label for="island_id" class="block text-sm font-medium text-gray-700 mb-1">Illa</label>
+                        <label for="island_id" class="block text-sm font-medium text-gray-700 mb-1">Island</label>
                         <select name="island_id" id="island_id" class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
                             @foreach($islands as $island)
                                 <option value="{{ $island->id }}" {{ $municipi->island_id == $island->id ? 'selected' : '' }}>
@@ -31,7 +31,7 @@
 
                     <div class="flex items-center justify-start mt-6">
                         <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded shadow transition duration-150">
-                            Actualizar
+                            Update
                         </button>
                     </div>
                 </form>
