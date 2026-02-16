@@ -15,7 +15,9 @@
     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
         {{ __('Dashboard') }}
     </x-nav-link>
-
+    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
+        {{ __('Users') }}
+    </x-nav-link>
     <x-nav-link :href="route('interesting-places.index')" :active="request()->routeIs('interesting-places.*')">
         {{ __('Interesting Places') }}
     </x-nav-link>
@@ -39,6 +41,9 @@
     </x-nav-link>
     <x-nav-link :href="route('meetings.create')" :active="request()->routeIs('meetings.create')">
         {{ __('New Meeting') }}
+    </x-nav-link>
+    <x-nav-link :href="route('comments.index')" :active="request()->routeIs('comments.index')">
+        {{ __('Comments') }}
     </x-nav-link>
 </div>
 

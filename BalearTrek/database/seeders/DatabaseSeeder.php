@@ -46,6 +46,14 @@ class DatabaseSeeder extends Seeder
                 Meeting::all()->each(function($meeting) use ($guiesIds) {
                     $meeting->update(['user_id' => $guiesIds->random()]);
         });
+        $comments = \App\Models\Comment::factory(20)->create();
+        // Por cada comentario creado, generamos una imagen real de Picsum
+        $comments->each(function ($comment) {
+            \App\Models\Image::factory()->create([
+                'comment_id' => $comment->id,
+                'url' => "https://picsum.photos/seed/" . uniqid() . "/600/400"
+            ]);
+        });
     }
 
             $this->command->info('4. Creando Meetings vinculadas a guías reales...');

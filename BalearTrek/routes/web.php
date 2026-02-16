@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\InterestingPlaceController;
 use App\Http\Controllers\MunicipalityController;
 use App\Http\Controllers\TrekController;
+use App\Http\Controllers\MeetingController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,6 +26,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('municipis', \App\Http\Controllers\MunicipalityController::class);
     Route::resource('treks', TrekController::class);
     Route::resource('meetings', \App\Http\Controllers\MeetingController::class);
+    Route::get('/comments', [CommentController::class, 'index'])->name('comments.index');
+    Route::get('/comments/{comment}', [CommentController::class, 'show'])->name('comments.show');
+    Route::patch('/comments/{comment}/validate', [CommentController::class, 'validateComment'])->name('comments.validate');
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+    Route::resource('users', UserController::class);
 });
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     // Listado y búsqueda

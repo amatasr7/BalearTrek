@@ -15,11 +15,13 @@ class ImageFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    // database/factories/ImageFactory.php
     public function definition(): array
     {
         return [
-            'url' => $this->faker->imageUrl(),
-            'comment_id' => Comment::inRandomOrder()->value('id'),
+            // Usamos un número aleatorio para que cada imagen sea diferente
+            'url' => "https://picsum.photos/seed/" . rand(1, 10000) . "/600/400",
+            'comment_id' => \App\Models\Comment::inRandomOrder()->first()->id ?? 1,
             'created_at' => now(),
             'updated_at' => now(),
         ];
