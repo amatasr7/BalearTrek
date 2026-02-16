@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('meetings', function (Blueprint $table) {
             $table->id();
             $table->foreignId("user_id")->constrained()->onUpdate("restrict")->onDelete("restrict");
-            $table->foreignId("trek_id")->constrained()->onUpdate("restrict")->onDelete("restrict");
+            $table->foreignId('trek_id')->constrained()->onDelete('cascade');
             $table->date("day");
             $table->time("time");
             $table->integer('totalScore')->default(0);

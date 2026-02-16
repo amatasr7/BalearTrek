@@ -12,11 +12,23 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                </div>
-            </div>
+    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+        {{ __('Dashboard') }}
+    </x-nav-link>
+
+    <x-nav-link :href="route('interesting-places.index')" :active="request()->routeIs('interesting-places.*')">
+        {{ __('Interesting Places') }}
+    </x-nav-link>
+    <x-nav-link :href="route('municipis.index')" :active="request()->routeIs('municipis.*')">
+        {{ __('Municipalities') }}
+    </x-nav-link>
+    <x-nav-link :href="route('treks.index')" :active="request()->routeIs('treks.*')">
+        {{ __('Treks') }}
+    </x-nav-link>
+    <x-nav-link :href="route('meetings.index')" :active="request()->routeIs('meetings.*')">
+        {{ __('Meetings') }}
+    </x-nav-link>
+</div>
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">

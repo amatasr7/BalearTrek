@@ -9,22 +9,34 @@ use App\Models\Comment;
 class Meeting extends Model
 {
     protected $fillable = [
-      'user_id',
-      'trek_id',
-      'day',
-      'time',
-      'appDateIni',
-      'appDateEnd',
-    ];
+    'user_id',    // El guía
+    'trek_id',    // La excursión
+    'day',
+    'time',
+    'appDateIni', // Fecha inicio inscripciones
+    'appDateEnd', // Fecha fin inscripciones
+    'totalScore',
+    'countScore',
+];
 
+
+    public function trek()
+    {
+      return $this->belongsTo(Trek::class);
+    }
     public function comments()
     {
       return $this->hasMany(Comment::class);
     }
 
+    public function guide()
+    {
+      return $this->belongsTo(User::class, 'user_id');
+    }
+
     public function user()
     {
-      return $this->belongsTo(User::class);
+      return $this->belongsTo(User::class, 'user_id');
     }
 
     public function users()

@@ -26,6 +26,7 @@ class User extends Authenticatable
         'phone',
         'password',
         'role_id',
+        'is_active',
     ];
 
     //protected $guarded = [
@@ -65,6 +66,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_active' => 'boolean',
         ];
     }
 
@@ -91,7 +93,12 @@ class User extends Authenticatable
     // Mètodes per comprovar rols
     public function isAdmin(): bool
     {
-        return $this->role_id === Role::where('name', 'admaain')->first()?->id;
+        return $this->role_id === Role::where('name', 'admin')->first()?->id;
+    }
+
+    public function isGuide(): bool
+    {
+        return $this->role_id === Role::where('name', 'guide')->first()?->id;
     }
 
 /*

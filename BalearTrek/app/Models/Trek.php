@@ -10,10 +10,13 @@ use App\Models\InterestingPlace;
 class Trek extends Model
 {
     protected $fillable = [
-        'regNumber',
-        'name',
-        'municipality_id',
-    ];
+    'regNumber',
+    'name',
+    'status',        // Necesario para activar/desactivar la excursión
+    'totalScore',    
+    'countScore',
+    'municipality_id',
+];
 
     public function meetings()
     {

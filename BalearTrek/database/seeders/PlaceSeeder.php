@@ -13,7 +13,7 @@ class PlaceSeeder extends Seeder
     public function run(): void
     {
         // Des d'un arxiu JSON
-        $jsonData = file_get_contents(env('APP_TEMP') . "places.json");
+        $jsonData = file_get_contents(public_path('data/places.json'));
         $places = json_decode($jsonData, true);
 
         // Recórrer els 'treks' del JSON
