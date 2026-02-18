@@ -2,10 +2,10 @@ import "./UserPanel.css";
 
 export default function UserPanel({ onSelect }) {
   const menuItems = [
-    { id: "encuentros", label: "My comments" },
-    { id: "comentarios", label: "Comments" },
-    { id: "opcion3", label: "My meetings" },
-    { id: "opcion4", label: "Meetings" },
+    { id: "encuentros", label: "Mis comentarios" },
+    { id: "comentarios", label: "Comentarios" },
+    { id: "opcion3", label: "Mis quedadas" },
+    { id: "opcion4", label: "Quedadas" },
   ];
 
   const sidebarStyle = {
@@ -41,7 +41,7 @@ export default function UserPanel({ onSelect }) {
   return (
     <aside className="user-panel" style={sidebarStyle}>
       <h2 style={{ marginBottom: "5px", fontSize: "1.1rem", color: "#003366" }}>
-        USER PANEL
+        Panel de Usuario
       </h2>
       <div className="user-grid" style={buttonContainerStyle}>
         {menuItems.map((item) => (

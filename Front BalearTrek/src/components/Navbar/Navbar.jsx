@@ -20,13 +20,11 @@ export default function Navbar({ onSelect }) {
       <div className="nav-links">
         {/* Usamos onSelect que viene de las props */}
         <button onClick={() => onSelect("home")}>Home</button>
-        <button onClick={() => onSelect("treks")}>Treks</button>
-        <button onClick={() => onSelect("more-info")}>More Info</button>
-        <button onClick={() => onSelect("interesting-places")}>
-          Interesting Places
-        </button>
-        <button onClick={() => onSelect("meetings")}>Meetings</button>
-        <button onClick={() => onSelect("contact")}>Contact</button>
+        <button onClick={() => onSelect("treks")}>Excursiones</button>
+        <button onClick={() => onSelect("more-info")}>Más información</button>
+        <button onClick={() => onSelect("interesting-places")}>Lugares</button>
+        <button onClick={() => onSelect("meetings")}>Quedadas</button>
+        <button onClick={() => onSelect("contact")}>Contacto</button>
       </div>
 
       <div className="navbar-actions">
@@ -34,7 +32,7 @@ export default function Navbar({ onSelect }) {
         <form onSubmit={handleSearch} className="search-bar">
           <input
             type="text"
-            placeholder="Search treks..."
+            placeholder="Busca excursiones..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -47,7 +45,7 @@ export default function Navbar({ onSelect }) {
           onClick={() => onSelect("register")}
           title="Login / Register"
         >
-          Log in
+          Inicia sesión
         </button>
       </div>
     </nav>

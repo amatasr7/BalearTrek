@@ -10,50 +10,54 @@ const MoreInfo = () => {
         <p>Prepárate correctamente para disfrutar de las Baleares.</p>
       </div>
 
-      {/* Contenedor principal en rejilla */}
       <div className="info-grid">
-        {/* CARD 1: EQUIPAMIENTO */}
-        <div className="info-card">
-          <h3>🎒 Equipamiento</h3>
+        {/* CARD 1: EQUIPAMIENTO - Ocupa todo el ancho superior */}
+        <div className="info-card equipment-card full-width">
+          <h3>🎒 Equipamiento Recomendado</h3>
           <div className="equipment-mini-list">
             {equipmentData.map((item) => (
               <div key={item.id} className="equipment-mini-item">
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="equipment-mini-img"
-                />
-                <div>
-                  <strong>{item.name}:</strong>
-                  <span className="mini-desc"> {item.description}</span>
+                <div className="img-container">
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="equipment-mini-img"
+                  />
+                </div>
+                <div className="equipment-mini-text">
+                  <strong>{item.name}</strong>
+                  <p className="mini-desc">{item.description}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        <br />
-        {/* CARD 2: NIVELES */}
+        {/* CARD 2: NIVELES - Ocupa el 50% inferior izquierdo */}
         <div className="info-card">
           <h3>⛰️ Niveles de Dificultad</h3>
-          <p>
-            <strong>Bajo:</strong> Paseos relajados por senderos llanos.
-          </p>
-          <p>
-            <strong>Medio:</strong> Requiere buena forma física y calzado
-            adecuado.
-          </p>
-          <p>
-            <strong>Alto:</strong> Solo para montañeros experimentados.
-          </p>
+          <div className="levels-content">
+            <p>
+              <strong>Bajo:</strong> Paseos relajados por senderos llanos.
+            </p>
+            <p>
+              <strong>Medio:</strong> Requiere buena forma física y calzado
+              adecuado.
+            </p>
+            <p>
+              <strong>Alto:</strong> Solo para montañeros experimentados y rutas
+              técnicas.
+            </p>
+          </div>
         </div>
 
-        {/* CARD 3: SOSTENIBILIDAD */}
+        {/* CARD 3: SOSTENIBILIDAD - Ocupa el 50% inferior derecho */}
         <div className="info-card">
           <h3>🌍 Sostenibilidad</h3>
           <p>
             Cuida el entorno: mantente en los senderos marcados, llévate toda tu
-            basura y respeta la flora y fauna local de nuestras islas.
+            basura y respeta la flora y fauna local de nuestras islas para que
+            todos podamos seguir disfrutándolas.
           </p>
         </div>
       </div>
