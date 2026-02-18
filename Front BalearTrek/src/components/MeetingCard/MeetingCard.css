@@ -1,0 +1,34 @@
+.meetings-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.meeting-card {
+  background: var(--white);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  border-top: 4px solid var(--secondary);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.meeting-card:hover {
+  transform: translateY(-5px);
+}
+
+.meeting-card button {
+  background: var(--primary);
+  color: var(--white);
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  width: 100%;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.meeting-card button:hover {
+  background-color: var(--secondary);
+}

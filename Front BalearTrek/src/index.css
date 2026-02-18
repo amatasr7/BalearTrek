@@ -1,0 +1,47 @@
+/* --- RESET Y BASES --- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --primary: #003459;
+  --secondary: #00a8e8;
+  --white: #ffffff;
+  --gray-light: #f8f9fa;
+  --border: #dce1e6;
+  --shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  --max-width: 1200px;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100vh;
+  background-color: transparent !important;
+}
+
+body {
+  font-family:
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    sans-serif;
+  color: #333;
+  background-image:
+    linear-gradient(rgba(244, 247, 249, 0.3), rgba(244, 247, 249, 0.3)),
+    url("/images/fondo.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 20px;
+  width: 100%;
+}

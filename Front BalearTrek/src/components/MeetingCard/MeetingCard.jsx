@@ -1,3 +1,5 @@
+import "./MeetingCard.css";
+
 export default function MeetingCard({ title, date }) {
   return (
     <article className="meeting-card">

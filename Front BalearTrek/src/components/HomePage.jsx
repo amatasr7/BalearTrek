@@ -1,6 +1,6 @@
 import { useState } from "react";
-import UserPanel from "./UserPanel";
-import Navbar from "./Navbar";
+import UserPanel from "./UserPanel/UserPanel";
+import Navbar from "./Navbar/Navbar";
 
 export default function HomePage() {
   // Estado para saber qué estamos viendo

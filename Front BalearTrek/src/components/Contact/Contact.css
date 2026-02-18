@@ -1,0 +1,44 @@
+.contact-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+.contact-info h2 {
+  color: var(--secondary);
+  margin-bottom: 20px;
+}
+
+.contact-form-card {
+  background: #f9f9f9;
+  padding: 30px;
+  border-radius: 8px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-form-card button {
+  background-color: #004a99 !important;
+  color: white !important;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+}
+
+.app-footer {
+  background-color: var(--primary);
+  color: white;
+  padding: 40px 0 20px 0;
+  margin-top: 60px;
+}

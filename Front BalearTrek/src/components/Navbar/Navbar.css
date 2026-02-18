@@ -1,0 +1,101 @@
+.app-header {
+  background-color: var(--primary);
+  width: 100%;
+  padding: 12px 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar h1 {
+  color: var(--white);
+  font-size: 1.6rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 10px;
+}
+
+.nav-links button,
+.login-btn {
+  color: var(--white) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: none;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-links button:hover,
+.login-btn:hover {
+  background-color: var(--secondary) !important;
+  transform: translateY(-1px);
+}
+
+.search-bar input {
+  padding: 7px 12px;
+  border-radius: 4px 0 0 4px;
+  border: none;
+  width: 140px;
+}
+
+.search-bar button {
+  background: var(--secondary);
+  border: none;
+  padding: 7px 12px;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  color: white;
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+}
+
+.search-bar input {
+  padding: 8px 12px;
+  border-radius: 6px 0 0 6px;
+  border: none;
+  outline: none;
+  font-size: 0.9rem;
+  width: 180px;
+}
+
+.search-bar button {
+  background: var(--secondary);
+  border: none;
+  padding: 8px 12px;
+  border-radius: 0 6px 6px 0;
+  cursor: pointer;
+  color: white;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s;
+}
+
+.search-bar button:hover {
+  background-color: #0086bc;
+}

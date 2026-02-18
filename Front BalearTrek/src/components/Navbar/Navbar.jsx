@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./Navbar.css";
 
 // Recibimos onSelect como prop para comunicar con App.jsx
 export default function Navbar({ onSelect }) {
@@ -33,7 +34,7 @@ export default function Navbar({ onSelect }) {
         <form onSubmit={handleSearch} className="search-bar">
           <input
             type="text"
-            placeholder="Buscar rutas..."
+            placeholder="Search treks..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -41,12 +42,12 @@ export default function Navbar({ onSelect }) {
         </form>
 
         {/* Botón de Registro/Login (Punto 9) */}
-        <button 
-          className="login-btn" 
+        <button
+          className="login-btn"
           onClick={() => onSelect("register")}
-          title="Iniciar sesión / Registro"
+          title="Login / Register"
         >
-          👤
+          Log in
         </button>
       </div>
     </nav>

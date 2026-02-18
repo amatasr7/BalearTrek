@@ -8,7 +8,9 @@ use App\Http\Controllers\Api\TrekController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Api\Auth\ApiRegisterController;
 
+Route::post('/register-api', [ApiRegisterController::class, 'register']);
 Route::post('/register', [RegisteredUserController::class, 'store']);
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 

@@ -1,0 +1,30 @@
+.user-panel {
+  background: var(--white);
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.user-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.user-grid button {
+  background-color: var(--gray-light);
+  border: 1px solid var(--border);
+  color: var(--primary);
+  padding: 12px 5px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.75rem;
+  transition: all 0.2s;
+}
+
+.user-grid button:hover {
+  background-color: var(--secondary);
+  color: white;
+}

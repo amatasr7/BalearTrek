@@ -1,39 +1,63 @@
 import { useState, useEffect } from "react";
-import HeroSlider from "./components/HeroSlider";
-import Navbar from "./components/Navbar";
-import MeetingCard from "./components/MeetingCard";
-import UserPanel from "./components/UserPanel";
+import Navbar from "./components/Navbar/Navbar";
+import HeroSlider from "./components/HeroSlider/HeroSlider";
+import UserPanel from "./components/UserPanel/UserPanel";
+import MeetingCard from "./components/MeetingCard/MeetingCard";
+import Contact from "./components/Contact/Contact";
 import Footer from "./components/Footer";
+import RegisterForm from "./components/RegisterForm";
+import HomePage from "./components/HomePage";
 import "./App.css";
+import "./index.css";
 
 function App() {
   const [activeView, setActiveView] = useState("home");
-  const [data, setData] = useState([]); // Estado para los datos del backend
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // 1. Efecto para cargar datos cada vez que cambie la vista
+  // Guardamos el token en el estado para que React sepa que estamos logueados
+  const [token, setToken] = useState(localStorage.getItem("token") || null);
+
   useEffect(() => {
-    if (activeView === "home") {
-      setData([]); // Limpiar datos si volvemos a home
+    // Si estamos en home o en registro, no pedimos datos de la API de Treks
+    if (activeView === "home" || activeView === "register") {
+      setData([]);
       return;
     }
 
     setLoading(true);
-    // Cambia 'balertrek.test' por tu URL local de Laragon
-    fetch(`http://balertrek.test/api/${activeView}`)
-      .then((res) => res.json())
+
+    // Configuramos las cabeceras. Si tenemos token, lo enviamos.
+    const headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    };
+
+    if (token) {
+      headers["Authorization"] = `Bearer ${token}`;
+    }
+
+    fetch(`http://balertrek.test/api/${activeView}`, { headers })
+      .then((res) => {
+        if (res.status === 401) {
+          throw new Error("No autorizado. Por favor, regístrate.");
+        }
+        return res.json();
+      })
       .then((json) => {
-        setData(json);
+        // Laravel paginate devuelve los datos dentro de .data
+        setData(json.data || json);
         setLoading(false);
       })
       .catch((err) => {
         console.error("Error cargando datos:", err);
+        setData([]); // Limpiamos datos para mostrar el mensaje de error
         setLoading(false);
       });
-  }, [activeView]);
+  }, [activeView, token]);
 
   const renderMainContent = () => {
-    // VISTA HOME (Punto 2: Carrusel y destacados)
+    // 1. VISTA HOME
     if (activeView === "home") {
       return (
         <>
@@ -47,16 +71,33 @@ function App() {
       );
     }
 
-    // VISTA DINÁMICA (Puntos 3, 5 y 6: Catálogos filtrados)
+    // 2. VISTA DE REGISTRO (Punto 9)
+    if (activeView === "register") {
+      return (
+        <RegisterForm
+          onRegisterSuccess={(newToken) => {
+            setToken(newToken);
+            setActiveView("home");
+          }}
+        />
+      );
+    }
+
+    // 3. VISTA DE CONTACTO
+    if (activeView === "contact") {
+      return <Contact />;
+    }
+
+    // 4. VISTA DINÁMICA (Treks, Meetings, etc.)
     return (
       <section className="dynamic-view">
         <button onClick={() => setActiveView("home")} className="back-btn">
-          ← Volver al inicio
+          ← Back to Home
         </button>
-        <h2>Sección: {activeView.replace("-", " ").toUpperCase()}</h2>
+        <h2>Section: {activeView.replace("-", " ").toUpperCase()}</h2>
 
         {loading ? (
-          <p>Cargando datos de Laravel...</p>
+          <p>Loading data...</p>
         ) : (
           <div className="meetings-grid">
             {data.length > 0 ? (
@@ -64,11 +105,28 @@ function App() {
                 <MeetingCard
                   key={item.id}
                   title={item.nombre || item.title}
-                  date={item.fecha || item.municipio}
+                  date={item.fecha || item.municipio || item.dificultat}
                 />
               ))
             ) : (
-              <p>No hay elementos disponibles en esta categoría.</p>
+              <div style={{ textAlign: "center", padding: "20px" }}>
+                <p>You don't have access to this content.</p>
+                {!token && (
+                  <button
+                    onClick={() => setActiveView("register")}
+                    style={{
+                      marginTop: "10px",
+                      color: "var(--secondary)",
+                      cursor: "pointer",
+                      background: "none",
+                      border: "none",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Click here to register and view the content.
+                  </button>
+                )}
+              </div>
             )}
           </div>
         )}
@@ -80,7 +138,6 @@ function App() {
     <>
       <header className="app-header">
         <div className="container">
-          {/* PASAMOS onSelect al Navbar para que los botones funcionen */}
           <Navbar onSelect={(viewId) => setActiveView(viewId)} />
         </div>
       </header>
