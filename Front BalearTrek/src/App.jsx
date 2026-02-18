@@ -7,6 +7,7 @@ import Contact from "./components/Contact/Contact";
 import Footer from "./components/Footer";
 import RegisterForm from "./components/RegisterForm";
 import HomePage from "./components/HomePage";
+import MoreInfo from "./components/MoreInfo/MoreInfo";
 import "./App.css";
 import "./index.css";
 
@@ -88,7 +89,11 @@ function App() {
       return <Contact />;
     }
 
-    // 4. VISTA DINÁMICA (Treks, Meetings, etc.)
+    // 4. VISTA DE MÁS INFORMACIÓN
+    if (activeView === "more-info") {
+      return <MoreInfo />;
+    }
+    // 5. VISTA DINÁMICA (Treks, Meetings, etc.)
     return (
       <section className="dynamic-view">
         <button onClick={() => setActiveView("home")} className="back-btn">

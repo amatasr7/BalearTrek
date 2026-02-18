@@ -9,7 +9,7 @@ return [
     */
 
     // Aquí van las rutas que quieres habilitar (normalmente todas las de la API)
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    'paths' => ['api/*', 'sanctum/csrf-cookie', 'login'],
 
     // Aquí van los verbos HTTP permitidos. '*' significa todos (GET, POST, PUT, DELETE, etc.)
     'allowed_methods' => ['*'],
