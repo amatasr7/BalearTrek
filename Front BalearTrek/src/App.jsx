@@ -38,7 +38,8 @@ function App() {
       headers["Authorization"] = `Bearer ${token}`;
     }
 
-    fetch(`http://balertrek.test/api/${activeView}`, { headers })
+    const apiUrl = `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/${activeView}`;
+    fetch(apiUrl, { headers })
       .then((res) => {
         if (res.status === 401) {
           throw new Error("No autorizado. Por favor, regístrate.");

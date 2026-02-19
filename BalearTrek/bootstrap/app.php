@@ -17,6 +17,11 @@ return Application::configure(basePath: dirname(__DIR__))
         },
     )
     ->withMiddleware(function (Middleware $middleware) {
+        // Excluir CSRF de las rutas de API
+        $middleware->validateCsrfTokens(except: [
+            'api/*',
+        ]);
+
         // Registrar middleware personalitzat
         $middleware->alias([
             'CHECK-ROLEADMIN' => \App\Http\Middleware\CheckRoleAdmin::class,  // 'CHECK-ROLEADMIN' és l'alias del middleware
