@@ -38,17 +38,21 @@ function App() {
       headers["Authorization"] = `Bearer ${token}`;
     }
 
-    const apiUrl = `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/${activeView}`;
+    const apiUrl = `${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/${activeView}`;
     fetch(apiUrl, { headers })
       .then((res) => {
         if (res.status === 401) {
           throw new Error("No autorizado. Por favor, regístrate.");
         }
+        if (!res.ok) {
+          throw new Error(`Error ${res.status}: ${res.statusText}`);
+        }
         return res.json();
       })
       .then((json) => {
         // Laravel paginate devuelve los datos dentro de .data
-        setData(json.data || json);
+        const items = json.data || json;
+        setData(Array.isArray(items) ? items : []);
         setLoading(false);
       })
       .catch((err) => {
@@ -107,13 +111,25 @@ function App() {
         ) : (
           <div className="meetings-grid">
             {data.length > 0 ? (
-              data.map((item) => (
-                <MeetingCard
-                  key={item.id}
-                  title={item.nombre || item.title}
-                  date={item.fecha || item.municipio || item.dificultat}
-                />
-              ))
+              data.map((item) => {
+                // Extraer título y fecha según el tipo de dato
+                let title =
+                  item.name || item.title || item.nombre || "Sin título";
+                let subtitle = "";
+
+                if (activeView === "treks") {
+                  subtitle = item.dificultat || item.distance || "Excursión";
+                } else if (activeView === "meetings") {
+                  subtitle = item.date || item.fecha || "Próximamente";
+                } else if (activeView === "interesting-places") {
+                  subtitle =
+                    item.place_type?.name || item.gps || "Lugar de interés";
+                }
+
+                return (
+                  <MeetingCard key={item.id} title={title} date={subtitle} />
+                );
+              })
             ) : (
               <div style={{ textAlign: "center", padding: "20px" }}>
                 <p>You don't have access to this content.</p>

@@ -14,7 +14,7 @@ export default function RegisterForm({ onRegisterSuccess }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const apiUrl = `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/register-api`;
+      const apiUrl = `${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/register-api`;
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
@@ -54,7 +54,9 @@ export default function RegisterForm({ onRegisterSuccess }) {
         <input
           type="text"
           placeholder="Last Name"
-          onChange={(e) => setFormData({ ...formData, lastname: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, lastname: e.target.value })
+          }
           required
         />
         <input
