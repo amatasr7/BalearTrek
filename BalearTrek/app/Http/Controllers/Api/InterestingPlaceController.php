@@ -58,10 +58,10 @@ class InterestingPlaceController extends Controller
     public function show($id)
     {
         try {
-            $interestingPlace = InterestingPlace::with('placeType')->findOrFail($id);
+            $interestingPlace = InterestingPlace::with(['placeType', 'treks'])->findOrFail($id);
             
             return response()->json([
-                'data' => $interestingPlace,
+                'data' => new \App\Http\Resources\InterestingPlaceDetailResource($interestingPlace),
                 'meta' => 'Place of interest mostrado correctamente'
             ]);
         } catch (\Exception $e) {

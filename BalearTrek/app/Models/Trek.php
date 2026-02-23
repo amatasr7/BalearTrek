@@ -12,6 +12,7 @@ class Trek extends Model
     protected $fillable = [
     'regNumber',
     'name',
+    'description',
     'status',        // Necesario para activar/desactivar la excursión
     'totalScore',    
     'countScore',

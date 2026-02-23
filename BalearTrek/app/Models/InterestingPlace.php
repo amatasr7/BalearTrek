@@ -8,7 +8,7 @@ use App\Models\Trek;
 
 class InterestingPlace extends Model
 {
-    protected $fillable = ['name', 'gps', 'place_type_id'];
+    protected $fillable = ['name', 'gps', 'place_type_id', 'description'];
     
     public function placeType()
     {

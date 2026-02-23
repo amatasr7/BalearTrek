@@ -26,12 +26,13 @@ class TrekController extends Controller
         $request->validate([
             'regNumber' => 'required|unique:treks|max:20',
             'name' => 'required|max:100',
+            'description' => 'nullable|string',
             'municipality_id' => 'required|exists:municipalities,id',
             'places' => 'required|array'
         ]);
 
         // 1. Creamos la Trek
-        $trek = Trek::create($request->only(['regNumber', 'name', 'municipality_id']));
+        $trek = Trek::create($request->only(['regNumber', 'name', 'description', 'municipality_id']));
 
         // 2. Preparamos los IDs de los lugares con el campo 'order'
         // Esto soluciona el error "Field order doesn't have a default value"
@@ -63,12 +64,13 @@ class TrekController extends Controller
         $request->validate([
             'regNumber' => 'required|max:20|unique:treks,regNumber,' . $id,
             'name' => 'required|max:100',
+            'description' => 'nullable|string',
             'municipality_id' => 'required|exists:municipalities,id',
             'places' => 'required|array'
         ]);
 
         // 3. Actualizamos los campos de la tabla 'treks'
-        $trek->update($request->only(['regNumber', 'name', 'municipality_id']));
+        $trek->update($request->only(['regNumber', 'name', 'description', 'municipality_id']));
 
         // 4. Preparamos los IDs de los lugares para la tabla pivote con 'order' = 0
         // Esto evita el error: Field 'order' doesn't have a default value

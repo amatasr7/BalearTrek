@@ -11,6 +11,7 @@ use Database\Seeders\ZoneSeeder;
 use Database\Seeders\MunicipalitySeeder;
 use Database\Seeders\TrekSeeder;
 use Database\Seeders\PlaceSeeder;
+use Database\Seeders\DescriptionSeeder;
 use App\Models\User;
 use App\Models\Meeting;
 use App\Models\Image;
@@ -35,6 +36,7 @@ class DatabaseSeeder extends Seeder
                 MunicipalitySeeder::class,
                 TrekSeeder::class,
                 PlaceSeeder::class,
+                DescriptionSeeder::class,
             ]);
 
             // 3. Obtenemos los guías que acabamos de crear

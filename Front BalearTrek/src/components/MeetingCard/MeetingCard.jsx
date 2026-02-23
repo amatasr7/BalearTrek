@@ -20,10 +20,15 @@ export default function MeetingCard({ title, date, item = null }) {
         score: item.totalScore,
       };
     } else if (activeView === "meetings") {
-      displaySubtitle = item.date || item.fecha || "Próximamente";
+      // Para meetings: mostrar la trek o un título genérico
+      displayTitle =
+        item.trek?.name ||
+        item.trek?.nom ||
+        `Trebada del ${item.date ? item.date.substring(0, 10) : "TBD"}`;
+      displaySubtitle = item.date || item.day || "Próximamente";
       additionalInfo = {
-        guide: item.guide?.name,
-        availableSpots: item.available_spots,
+        guide: typeof item.guide === "string" ? item.guide : item.guide?.name,
+        availableSpots: item.available_spots || item.max_participants,
         comments: item.comments?.length || 0,
       };
     } else if (activeView === "interesting-places") {
@@ -89,9 +94,6 @@ export default function MeetingCard({ title, date, item = null }) {
           )}
         </div>
       )}
-
-      <button className="card-button">¡Apúntate!</button>
     </article>
   );
 }
-

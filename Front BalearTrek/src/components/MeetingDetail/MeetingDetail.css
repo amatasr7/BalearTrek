@@ -1,0 +1,40 @@
+.meeting-detail {
+  background: #fff;
+  border-radius: 8px;
+  padding: 18px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  max-width: 850px;
+  margin: 0 auto;
+}
+.meeting-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.meeting-title {
+  font-size: 1.4rem;
+  margin: 0;
+}
+.meeting-meta span {
+  display: inline-block;
+  margin-left: 10px;
+  color: #555;
+}
+.meeting-info p {
+  margin: 6px 0;
+}
+.meeting-comments h2 {
+  margin-top: 12px;
+}
+.comment-item {
+  padding: 10px;
+  border-bottom: 1px solid #f2f2f2;
+}
+.comment-meta {
+  font-weight: 600;
+  color: #333;
+}
+.comment-text {
+  color: #444;
+}

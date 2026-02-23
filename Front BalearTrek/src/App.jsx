@@ -10,13 +10,15 @@ import HomePage from "./components/HomePage";
 import MoreInfo from "./components/FAQ/FAQ";
 import TrekDetail from "./components/TrekDetail/TrekDetail";
 import PlaceDetail from "./components/PlaceDetail/PlaceDetail";
+import MeetingDetail from "./components/MeetingDetail/MeetingDetail";
 import { TrekFilters } from "./components/TrekFilters/TrekFilters";
 import { Pagination } from "./components/Pagination/Pagination";
 import "./App.css";
 import "./index.css";
 
 function App() {
-  const { activeView, changeView, data, loading, token, selectedItem } = useApp();
+  const { activeView, changeView, data, loading, token, selectedItem, error } =
+    useApp();
 
   const renderMainContent = () => {
     // 1. VISTA HOME
@@ -54,21 +56,79 @@ function App() {
       const [base] = activeView.split("/");
       // Si hay un selectedItem, renderizar el componente de detalle correspondiente
       if (selectedItem) {
-        if (base === "treks") return (
-          <section className="dynamic-view">
-            <button onClick={() => changeView("treks")} className="back-btn">← Volver a Excursions</button>
-            <TrekDetail trek={selectedItem} />
-          </section>
-        );
+        if (base === "treks")
+          return (
+            <section className="dynamic-view">
+              <button onClick={() => changeView("treks")} className="back-btn">
+                ← Volver a Excursions
+              </button>
+              <TrekDetail trek={selectedItem} />
+            </section>
+          );
 
-        if (base === "interesting-places") return (
-          <section className="dynamic-view">
-            <button onClick={() => changeView("interesting-places")} className="back-btn">← Volver a Llocs</button>
-            <PlaceDetail place={selectedItem} />
-          </section>
-        );
+        if (base === "meetings")
+          return (
+            <section className="dynamic-view">
+              <button
+                onClick={() => changeView("meetings")}
+                className="back-btn"
+              >
+                ← Volver a Quedadas
+              </button>
+              <MeetingDetail meeting={selectedItem} />
+            </section>
+          );
+
+        if (base === "interesting-places")
+          return (
+            <section className="dynamic-view">
+              <button
+                onClick={() => changeView("interesting-places")}
+                className="back-btn"
+              >
+                ← Volver a Llocs
+              </button>
+              <PlaceDetail place={selectedItem} />
+            </section>
+          );
       }
-      // mientras carga o no hay seleccionado, seguir al render dinámico normal
+
+      // Si no hay selectedItem, mostrar estado claro: loading / error / fallback
+      return (
+        <section className="dynamic-view">
+          <button onClick={() => changeView(base)} className="back-btn">
+            ← Volver
+          </button>
+          <h2>Detalle: {base.replace("-", " ").toUpperCase()}</h2>
+          {loading ? (
+            <p>Cargando detalle...</p>
+          ) : error ? (
+            <div style={{ padding: 16 }}>
+              <p style={{ color: "#b00020" }}>Error: {error}</p>
+              <p>
+                Es posible que no tengas permiso para ver este elemento. Si es
+                así, por favor vuelve a iniciar sesión.
+              </p>
+              <div style={{ marginTop: 12 }}>
+                <button onClick={() => changeView(base)} className="back-btn">
+                  ← Volver a la lista
+                </button>
+                <button
+                  onClick={() => changeView("auth")}
+                  style={{ marginLeft: 8 }}
+                >
+                  Inicia sesión
+                </button>
+              </div>
+            </div>
+          ) : (
+            <p>
+              No se ha encontrado el detalle. Si deberías ver este contenido,
+              intenta recargar o iniciar sesión de nuevo.
+            </p>
+          )}
+        </section>
+      );
     }
 
     return (

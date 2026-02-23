@@ -173,6 +173,9 @@ export function AppProvider({ children }) {
                 available_spots: get(m, "available_spots"),
                 totalScore: get(m, "totalScore"),
                 countScore: get(m, "countScore", "vots"),
+                trek: get(m, "trek") || null,
+                user: get(m, "user") || null,
+                comments: get(m, "comments") || [],
               }))
             : [];
 
@@ -205,6 +208,15 @@ export function AppProvider({ children }) {
               get(raw, "user")?.name ||
               get(raw, "user")?.nom ||
               null;
+            base.trek = get(raw, "trek") || null;
+            base.user = get(raw, "user") || null;
+            base.comments = get(raw, "comments") || [];
+            base.available_spots = get(
+              raw,
+              "available_spots",
+              "max_participants",
+            );
+            base.countScore = get(raw, "countScore", "vots");
           }
 
           return base;
@@ -215,8 +227,8 @@ export function AppProvider({ children }) {
           const items = rawItems.map((it) => normalize(it, activeView));
           setData(items);
           setSelectedItem(null);
-        } else if (rawItems && typeof rawItems === 'object') {
-          const item = normalize(rawItems, activeView.split('/')[0]);
+        } else if (rawItems && typeof rawItems === "object") {
+          const item = normalize(rawItems, activeView.split("/")[0]);
           setSelectedItem(item);
           setData([]);
         } else {

@@ -30,6 +30,7 @@ class InterestingPlaceController extends Controller
             'name' => 'required|max:100',
             'gps' => 'required|unique:interesting_places',
             'place_type_id' => 'required|exists:place_types,id',
+            'description' => 'nullable|string',
         ]);
 
         InterestingPlace::create($request->all());
@@ -48,6 +49,7 @@ class InterestingPlaceController extends Controller
             'name' => 'required|max:100',
             'gps' => 'required|unique:interesting_places,gps,' . $interestingPlace->id,
             'place_type_id' => 'required|exists:place_types,id',
+            'description' => 'nullable|string',
         ]);
 
         $interestingPlace->update($request->all());

@@ -17,7 +17,7 @@ class CommentController extends Controller
     }
 
     /**
-     * Muestra el detalle de un comentario (El método que te falta).
+     * Muestra el detalle de un comentario.
      */
     public function show(Comment $comment)
     {
