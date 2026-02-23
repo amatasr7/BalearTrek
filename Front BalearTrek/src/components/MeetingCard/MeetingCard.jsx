@@ -2,7 +2,7 @@ import "./MeetingCard.css";
 import { useApp } from "../../context/useApp";
 
 export default function MeetingCard({ title, date, item = null }) {
-  const { activeView } = useApp();
+  const { activeView, viewDetail } = useApp();
 
   // Si se pasa un item completo, extraer información
   let displayTitle = title;
@@ -36,7 +36,11 @@ export default function MeetingCard({ title, date, item = null }) {
   }
 
   return (
-    <article className="meeting-card">
+    <article
+      className="meeting-card"
+      onClick={() => item && viewDetail(activeView, item.id)}
+      style={{ cursor: item ? "pointer" : "default" }}
+    >
       <div className="card-header">
         <h3>{displayTitle}</h3>
         <span className="card-subtitle">{displaySubtitle}</span>
@@ -90,3 +94,4 @@ export default function MeetingCard({ title, date, item = null }) {
     </article>
   );
 }
+

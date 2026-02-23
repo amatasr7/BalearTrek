@@ -1,0 +1,64 @@
+.trek-detail {
+  background: #fff;
+  border-radius: 8px;
+  padding: 18px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  max-width: 900px;
+  margin: 0 auto;
+}
+.trek-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.trek-title {
+  font-size: 1.5rem;
+  margin: 0;
+}
+.trek-status {
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+.trek-status.active {
+  background: #e6ffed;
+  color: #067a3f;
+}
+.trek-status.inactive {
+  background: #fff3f3;
+  color: #a10f0f;
+  border: 1px solid #f5c6c6;
+}
+.trek-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 8px;
+  color: #444;
+  margin-bottom: 12px;
+}
+.trek-description h2,
+.trek-places h2,
+.trek-meetings h2 {
+  font-size: 1.05rem;
+  margin: 10px 0;
+}
+.trek-places ol {
+  padding-left: 18px;
+  margin: 0;
+}
+.place-item {
+  padding: 8px 0;
+  border-bottom: 1px dashed #eee;
+}
+.place-type {
+  font-size: 0.85rem;
+  color: #666;
+}
+.meeting-item {
+  padding: 8px 0;
+  border-bottom: 1px solid #f2f2f2;
+}
+.meeting-date {
+  font-weight: 600;
+}

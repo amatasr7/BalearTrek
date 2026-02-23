@@ -8,13 +8,15 @@ import Footer from "./components/Footer";
 import AuthPage from "./components/AuthPage/AuthPage";
 import HomePage from "./components/HomePage";
 import MoreInfo from "./components/FAQ/FAQ";
+import TrekDetail from "./components/TrekDetail/TrekDetail";
+import PlaceDetail from "./components/PlaceDetail/PlaceDetail";
 import { TrekFilters } from "./components/TrekFilters/TrekFilters";
 import { Pagination } from "./components/Pagination/Pagination";
 import "./App.css";
 import "./index.css";
 
 function App() {
-  const { activeView, changeView, data, loading, token } = useApp();
+  const { activeView, changeView, data, loading, token, selectedItem } = useApp();
 
   const renderMainContent = () => {
     // 1. VISTA HOME
@@ -47,6 +49,28 @@ function App() {
     }
 
     // 5. VISTA DINÁMICA (Treks, Meetings, etc.)
+    // Si la vista incluye "/" asumimos que es una ruta detalle: e.g. "treks/12"
+    if (activeView.includes("/")) {
+      const [base] = activeView.split("/");
+      // Si hay un selectedItem, renderizar el componente de detalle correspondiente
+      if (selectedItem) {
+        if (base === "treks") return (
+          <section className="dynamic-view">
+            <button onClick={() => changeView("treks")} className="back-btn">← Volver a Excursions</button>
+            <TrekDetail trek={selectedItem} />
+          </section>
+        );
+
+        if (base === "interesting-places") return (
+          <section className="dynamic-view">
+            <button onClick={() => changeView("interesting-places")} className="back-btn">← Volver a Llocs</button>
+            <PlaceDetail place={selectedItem} />
+          </section>
+        );
+      }
+      // mientras carga o no hay seleccionado, seguir al render dinámico normal
+    }
+
     return (
       <section className="dynamic-view">
         <button onClick={() => changeView("home")} className="back-btn">
