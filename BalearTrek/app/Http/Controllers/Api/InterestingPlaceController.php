@@ -8,13 +8,43 @@ use Illuminate\Http\Request;
 
 class InterestingPlaceController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $interestingPlaces = InterestingPlace::with('placeType')->get();
+            $tipo = $request->query('tipo');
+            $ordem = $request->query('orden', 'name');
+            $direccion = $request->query('direccion', 'asc');
+            $pagina = $request->query('pagina', 1);
+            $limite = $request->query('limite', 10);
+
+            $query = InterestingPlace::with('placeType')
+                ->when($tipo, fn ($q) =>
+                    $q->whereHas('placeType', fn ($q2) =>
+                        $q2->where('name', 'like', "%$tipo%")
+                    )
+                );
+
+            $ordenesValidas = ['name', 'created_at', 'id'];
+            $ordeActual = in_array($ordem, $ordenesValidas) ? $ordem : 'name';
+            $dirAccion = strtolower($direccion) === 'desc' ? 'desc' : 'asc';
             
+            $query->orderBy($ordeActual, $dirAccion);
+
+            $total = $query->count();
+            $interestingPlaces = $query->offset(($pagina - 1) * $limite)
+                                       ->limit($limite)
+                                       ->get();
+
+            $totalPaginas = ceil($total / $limite);
+
             return response()->json([
                 'data' => $interestingPlaces,
+                'pagination' => [
+                    'pagina_actual' => $pagina,
+                    'total_paginas' => $totalPaginas,
+                    'total_items' => $total,
+                    'items_por_pagina' => $limite,
+                ],
                 'meta' => 'Places of interest mostrados correctamente'
             ]);
         } catch (\Exception $e) {

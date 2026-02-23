@@ -1,0 +1,207 @@
+/* --- CONTENEDOR PRINCIPAL --- */
+.auth-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 20px;
+}
+
+.auth-container {
+  background: var(--white);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  border-top: 4px solid var(--secondary);
+  width: 100%;
+  max-width: 450px;
+  padding: 40px;
+}
+
+/* --- HEADER --- */
+.auth-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.auth-header h2 {
+  color: var(--primary);
+  font-size: 28px;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.auth-header p {
+  color: #999;
+  font-size: 14px;
+}
+
+/* --- TABS --- */
+.auth-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 30px;
+  border-bottom: 2px solid var(--border);
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 14px 0;
+  border: none;
+  background: transparent;
+  color: #999;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.auth-tab:hover {
+  color: var(--primary);
+}
+
+.auth-tab.active {
+  color: var(--secondary);
+}
+
+.auth-tab.active::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--secondary);
+}
+
+/* --- ERROR MESSAGE --- */
+.auth-error {
+  background: #fee;
+  color: #c33;
+  padding: 12px 14px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  border-left: 4px solid #c33;
+}
+
+/* --- FORM --- */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-group input {
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  background: var(--gray-light);
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.form-group input::placeholder {
+  color: #bbb;
+}
+
+.form-group input:focus {
+  outline: none;
+  background: var(--white);
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 3px rgba(0, 168, 232, 0.1);
+}
+
+/* --- SUBMIT BUTTON --- */
+.auth-submit-btn {
+  padding: 14px;
+  background: var(--primary);
+  color: var(--white);
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.auth-submit-btn:hover:not(:disabled) {
+  background: var(--secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 168, 232, 0.3);
+}
+
+.auth-submit-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.auth-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* --- HELP TEXT --- */
+.auth-help-text {
+  text-align: center;
+  color: #999;
+  font-size: 13px;
+  margin: 0;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 600px) {
+  .auth-container {
+    padding: 30px 20px;
+  }
+
+  .auth-header h2 {
+    font-size: 24px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .auth-tab {
+    padding: 12px 0;
+    font-size: 13px;
+  }
+
+  .form-group input {
+    padding: 11px 12px;
+    font-size: 13px;
+  }
+
+  .auth-submit-btn {
+    padding: 12px;
+    font-size: 13px;
+  }
+}

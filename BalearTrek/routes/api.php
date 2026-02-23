@@ -9,18 +9,18 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\MeetingController;
 use App\Http\Controllers\Api\InterestingPlaceController;
 use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Api\Auth\ApiLoginController;
 use App\Http\Controllers\Api\Auth\ApiRegisterController;
 
 Route::post('/register-api', [ApiRegisterController::class, 'register']);
 Route::post('/register', [RegisteredUserController::class, 'store']);
-Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+Route::post('/login', [ApiLoginController::class, 'login']);
 
 // RUTES PROTEGIDES PER MÚLTIPLES MÈTODES D'AUTENTICACIÓ
 Route::middleware('MULTI-AUTH')->group(function () {  // Protegit per 'auth:sanctum' i per 'api-key'
 // Route::middleware('auth:sanctum')->group(function () {  // Protegit per 'auth:sanctum'
 // Route::middleware('API-KEY')->group(function () {  // Protegit per 'api-key'
-    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
+    Route::post('/logout', [ApiLoginController::class, 'logout']);
 
     // Binding de 'user' (ha d'estar abans de les rutes que l'utilitzen)
     Route::bind('user', function ($value) {

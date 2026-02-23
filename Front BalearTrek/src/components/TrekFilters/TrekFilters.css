@@ -1,0 +1,131 @@
+/* TrekFilters */
+.trek-filters {
+  background: var(--white);
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  box-shadow: var(--shadow);
+  border-top: 4px solid var(--secondary);
+}
+
+.trek-filters h3 {
+  color: var(--primary);
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.filters-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-group label {
+  color: var(--primary);
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.filter-group input,
+.filter-group select {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  background: var(--gray-light);
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.filter-group input::placeholder {
+  color: #999;
+}
+
+.filter-group input:focus,
+.filter-group select:focus {
+  outline: none;
+  background: var(--white);
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 3px rgba(0, 168, 232, 0.1);
+}
+
+.filter-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  padding-top: 15px;
+  border-top: 1px solid var(--border);
+}
+
+.btn-apply,
+.btn-reset {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.btn-apply {
+  background: var(--primary);
+  color: var(--white);
+}
+
+.btn-apply:hover {
+  background: var(--secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 52, 89, 0.2);
+}
+
+.btn-apply:active {
+  transform: translateY(0);
+}
+
+.btn-reset {
+  background: var(--gray-light);
+  color: var(--primary);
+  border: 1px solid var(--border);
+}
+
+.btn-reset:hover {
+  background: var(--border);
+  transform: translateY(-2px);
+}
+
+.btn-reset:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .filters-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .filter-actions {
+    flex-direction: column;
+  }
+
+  .btn-apply,
+  .btn-reset {
+    width: 100%;
+  }
+
+  .trek-filters h3 {
+    font-size: 15px;
+  }
+}

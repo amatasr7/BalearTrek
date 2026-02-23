@@ -1,0 +1,122 @@
+/* Pagination */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 30px 0;
+  padding: 20px;
+  background: var(--white);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  border-top: 4px solid var(--secondary);
+  flex-wrap: wrap;
+}
+
+.pagination-btn {
+  padding: 10px 18px;
+  background: var(--primary);
+  border: none;
+  color: var(--white);
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: var(--secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 168, 232, 0.3);
+}
+
+.pagination-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-pages {
+  display: flex;
+  gap: 6px;
+}
+
+.pagination-number {
+  min-width: 36px;
+  height: 36px;
+  padding: 0;
+  background: var(--gray-light);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--primary);
+  transition: all 0.3s ease;
+  font-size: 13px;
+}
+
+.pagination-number:hover:not(:disabled) {
+  border-color: var(--secondary);
+  color: var(--secondary);
+  background: var(--white);
+  transform: translateY(-2px);
+}
+
+.pagination-number.active {
+  background: var(--primary);
+  color: var(--white);
+  border-color: var(--primary);
+  font-weight: 700;
+}
+
+.pagination-number.dots {
+  cursor: default;
+  border: none;
+  background: transparent;
+  color: #999;
+}
+
+.pagination-info {
+  font-size: 13px;
+  color: var(--primary);
+  font-weight: 500;
+  white-space: nowrap;
+  padding: 0 10px;
+  border-left: 1px solid var(--border);
+}
+
+@media (max-width: 768px) {
+  .pagination {
+    gap: 10px;
+    padding: 15px;
+  }
+
+  .pagination-btn {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+
+  .pagination-number {
+    min-width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
+
+  .pagination-info {
+    font-size: 12px;
+    order: 3;
+    width: 100%;
+    border: none;
+    padding: 10px 0 0 0;
+    text-align: center;
+  }
+
+  /* En móviles, ocultar algunos números de página */
+  .pagination-number:nth-child(n + 3):nth-child(-n + 5):not(.active) {
+    display: none;
+  }
+}

@@ -1,66 +1,20 @@
-import { useState, useEffect } from "react";
+import { useApp } from "./context/useApp";
 import Navbar from "./components/Navbar/Navbar";
 import HeroSlider from "./components/HeroSlider/HeroSlider";
 import UserPanel from "./components/UserPanel/UserPanel";
 import MeetingCard from "./components/MeetingCard/MeetingCard";
 import Contact from "./components/Contact/Contact";
 import Footer from "./components/Footer";
-import RegisterForm from "./components/RegisterForm";
+import AuthPage from "./components/AuthPage/AuthPage";
 import HomePage from "./components/HomePage";
-import MoreInfo from "./components/MoreInfo/MoreInfo";
+import MoreInfo from "./components/FAQ/FAQ";
+import { TrekFilters } from "./components/TrekFilters/TrekFilters";
+import { Pagination } from "./components/Pagination/Pagination";
 import "./App.css";
 import "./index.css";
 
 function App() {
-  const [activeView, setActiveView] = useState("home");
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  // Guardamos el token en el estado para que React sepa que estamos logueados
-  const [token, setToken] = useState(localStorage.getItem("token") || null);
-
-  useEffect(() => {
-    // Si estamos en home o en registro, no pedimos datos de la API de Treks
-    if (activeView === "home" || activeView === "register") {
-      setData([]);
-      return;
-    }
-
-    setLoading(true);
-
-    // Configuramos las cabeceras. Si tenemos token, lo enviamos.
-    const headers = {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    };
-
-    if (token) {
-      headers["Authorization"] = `Bearer ${token}`;
-    }
-
-    const apiUrl = `${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/${activeView}`;
-    fetch(apiUrl, { headers })
-      .then((res) => {
-        if (res.status === 401) {
-          throw new Error("No autorizado. Por favor, regístrate.");
-        }
-        if (!res.ok) {
-          throw new Error(`Error ${res.status}: ${res.statusText}`);
-        }
-        return res.json();
-      })
-      .then((json) => {
-        // Laravel paginate devuelve los datos dentro de .data
-        const items = json.data || json;
-        setData(Array.isArray(items) ? items : []);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error cargando datos:", err);
-        setData([]); // Limpiamos datos para mostrar el mensaje de error
-        setLoading(false);
-      });
-  }, [activeView, token]);
+  const { activeView, changeView, data, loading, token } = useApp();
 
   const renderMainContent = () => {
     // 1. VISTA HOME
@@ -77,16 +31,9 @@ function App() {
       );
     }
 
-    // 2. VISTA DE REGISTRO (Punto 9)
-    if (activeView === "register") {
-      return (
-        <RegisterForm
-          onRegisterSuccess={(newToken) => {
-            setToken(newToken);
-            setActiveView("home");
-          }}
-        />
-      );
+    // 2. VISTA DE AUTENTICACIÓN (Login/Register - Punto 9)
+    if (activeView === "auth") {
+      return <AuthPage />;
     }
 
     // 3. VISTA DE CONTACTO
@@ -98,59 +45,52 @@ function App() {
     if (activeView === "more-info") {
       return <MoreInfo />;
     }
+
     // 5. VISTA DINÁMICA (Treks, Meetings, etc.)
     return (
       <section className="dynamic-view">
-        <button onClick={() => setActiveView("home")} className="back-btn">
+        <button onClick={() => changeView("home")} className="back-btn">
           ← Back to Home
         </button>
         <h2>Section: {activeView.replace("-", " ").toUpperCase()}</h2>
 
+        {/* Mostrar filtros solo para vistas que lo permiten */}
+        {(activeView === "treks" ||
+          activeView === "meetings" ||
+          activeView === "interesting-places") && <TrekFilters />}
+
         {loading ? (
           <p>Loading data...</p>
         ) : (
-          <div className="meetings-grid">
-            {data.length > 0 ? (
-              data.map((item) => {
-                // Extraer título y fecha según el tipo de dato
-                let title =
-                  item.name || item.title || item.nombre || "Sin título";
-                let subtitle = "";
+          <>
+            <div className="meetings-grid">
+              {data.length > 0 ? (
+                data.map((item) => <MeetingCard key={item.id} item={item} />)
+              ) : (
+                <div style={{ textAlign: "center", padding: "20px" }}>
+                  <p>You don't have access to this content.</p>
+                  {!token && (
+                    <button
+                      onClick={() => changeView("auth")}
+                      style={{
+                        marginTop: "10px",
+                        color: "var(--secondary)",
+                        cursor: "pointer",
+                        background: "none",
+                        border: "none",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Click here to register and view the content.
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
 
-                if (activeView === "treks") {
-                  subtitle = item.dificultat || item.distance || "Excursión";
-                } else if (activeView === "meetings") {
-                  subtitle = item.date || item.fecha || "Próximamente";
-                } else if (activeView === "interesting-places") {
-                  subtitle =
-                    item.place_type?.name || item.gps || "Lugar de interés";
-                }
-
-                return (
-                  <MeetingCard key={item.id} title={title} date={subtitle} />
-                );
-              })
-            ) : (
-              <div style={{ textAlign: "center", padding: "20px" }}>
-                <p>You don't have access to this content.</p>
-                {!token && (
-                  <button
-                    onClick={() => setActiveView("register")}
-                    style={{
-                      marginTop: "10px",
-                      color: "var(--secondary)",
-                      cursor: "pointer",
-                      background: "none",
-                      border: "none",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Click here to register and view the content.
-                  </button>
-                )}
-              </div>
-            )}
-          </div>
+            {/* Mostrar paginación solo si hay datos */}
+            {data.length > 0 && <Pagination />}
+          </>
         )}
       </section>
     );
@@ -160,14 +100,14 @@ function App() {
     <>
       <header className="app-header">
         <div className="container">
-          <Navbar onSelect={(viewId) => setActiveView(viewId)} />
+          <Navbar />
         </div>
       </header>
 
       <main className="main-container">
         <div className="container content-layout">
           <aside className="sidebar-container">
-            <UserPanel onSelect={(viewId) => setActiveView(viewId)} />
+            <UserPanel />
           </aside>
 
           <section className="main-content">{renderMainContent()}</section>

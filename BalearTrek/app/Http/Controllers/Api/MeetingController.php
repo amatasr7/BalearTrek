@@ -8,13 +8,41 @@ use Illuminate\Http\Request;
 
 class MeetingController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $meetings = Meeting::with(['trek', 'guide'])->get();
+            $trek_id = $request->query('trek_id');
+            $ordem = $request->query('orden', 'day');
+            $direccion = $request->query('direccion', 'desc');
+            $pagina = $request->query('pagina', 1);
+            $limite = $request->query('limite', 10);
+
+            $query = Meeting::with(['trek', 'guide'])
+                ->when($trek_id, fn ($q) =>
+                    $q->where('trek_id', $trek_id)
+                );
+
+            $ordenesValidas = ['day', 'created_at', 'id'];
+            $ordeActual = in_array($ordem, $ordenesValidas) ? $ordem : 'day';
+            $dirAccion = strtolower($direccion) === 'asc' ? 'asc' : 'desc';
             
+            $query->orderBy($ordeActual, $dirAccion);
+
+            $total = $query->count();
+            $meetings = $query->offset(($pagina - 1) * $limite)
+                             ->limit($limite)
+                             ->get();
+
+            $totalPaginas = ceil($total / $limite);
+
             return response()->json([
                 'data' => $meetings,
+                'pagination' => [
+                    'pagina_actual' => $pagina,
+                    'total_paginas' => $totalPaginas,
+                    'total_items' => $total,
+                    'items_por_pagina' => $limite,
+                ],
                 'meta' => 'Meetings mostradas correctamente'
             ]);
         } catch (\Exception $e) {

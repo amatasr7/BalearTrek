@@ -18,24 +18,58 @@ class TrekController extends Controller
     public function index(Request $request)
     {
         try {
-            // SELECCIÓ DE LES DADES
-            $treks = Trek::with(["meetings", "municipality", "municipality.island" ])
-                ->when($request->illa, fn ($q, $illa) =>
-                    $q->whereHas('municipality.island', fn ($q) =>
-                        $q->where('name', '=', $illa)
+            // Parámetros de filtrado
+            $isla = $request->query('isla');
+            $municipio = $request->query('municipio');
+            $ordem = $request->query('orden', 'name'); // Por defecto ordena por nombre
+            $direccion = $request->query('direccion', 'asc');
+            $pagina = $request->query('pagina', 1);
+            $limite = $request->query('limite', 10);
+
+            // CONSTRUCCIÓN DE LA QUERY
+            $query = Trek::with(["meetings", "municipality", "municipality.island", "municipality.zone"])
+                // Filtrar por isla si se proporciona
+                ->when($isla, fn ($q) =>
+                    $q->whereHas('municipality.island', fn ($q2) =>
+                        $q2->where('name', 'like', "%$isla%")
                     )
                 )
-                ->get();
+                // Filtrar por municipio si se proporciona
+                ->when($municipio, fn ($q) =>
+                    $q->whereHas('municipality', fn ($q2) =>
+                        $q2->where('name', 'like', "%$municipio%")
+                    )
+                );
 
-            // SELECCIÓ DEL FORMAT DE LA RESPOSTA
-            // return response()->json($treks);
-            return (TrekResource::collection($treks))->additional(['meta' => 'Treks mostrats correctament']); 
-        } catch (Exception $e) {
-            // GESTIÓ DE L'ERROR
-            // Retorna un JSON amb un missatge d'error i un codi d'estat 500
+            // ORDENAMIENTO
+            $ordenesValidas = ['name', 'regNumber', 'totalScore', 'created_at'];
+            $ordeActual = in_array($ordem, $ordenesValidas) ? $ordem : 'name';
+            $dirAccion = strtolower($direccion) === 'desc' ? 'desc' : 'asc';
+            
+            $query->orderBy($ordeActual, $dirAccion);
+
+            // PAGINACIÓN
+            $total = $query->count();
+            $treks = $query->offset(($pagina - 1) * $limite)
+                          ->limit($limite)
+                          ->get();
+
+            $totalPaginas = ceil($total / $limite);
+
+            // RESPUESTA
             return response()->json([
-                'message' => 'S\'ha produït un error al recuperar les dades',
-                // El següent és opcional i només s'hauria de mostrar en entorns de desenvolupament (APP_DEBUG=true)
+                'data' => TrekResource::collection($treks),
+                'pagination' => [
+                    'pagina_actual' => $pagina,
+                    'total_paginas' => $totalPaginas,
+                    'total_items' => $total,
+                    'items_por_pagina' => $limite,
+                ],
+                'meta' => 'Treks mostrados correctamente'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Se produjo un error al recuperar los datos',
                 'error_details' => $e->getMessage(),
             ], 500);
         }

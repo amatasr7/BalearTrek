@@ -1,6 +1,9 @@
+import { useApp } from "../../context/useApp";
 import "./UserPanel.css";
 
-export default function UserPanel({ onSelect }) {
+export default function UserPanel() {
+  const { changeView } = useApp();
+
   const menuItems = [
     { id: "encuentros", label: "Mis comentarios" },
     { id: "comentarios", label: "Comentarios" },
@@ -11,14 +14,14 @@ export default function UserPanel({ onSelect }) {
   const sidebarStyle = {
     display: "flex",
     flexDirection: "column",
-    width: "fit-content", // El ancho se ajusta al botón más largo
-    minWidth: "160px", // Un ancho mínimo para que no se vea colapsado
+    width: "fit-content",
+    minWidth: "160px",
     padding: "20px",
     backgroundColor: "#fff",
-    borderRadius: "8px", // Opcional: para que combine con tus cards de abajo
-    boxShadow: "0 2px 10px rgba(0,0,0,0.05)", // Un toque de sombra para separarlo del fondo
+    borderRadius: "8px",
+    boxShadow: "0 2px 10px rgba(0,0,0,0.05)",
     gap: "15px",
-    alignSelf: "flex-start", // Importante: evita que se estire verticalmente si el padre es Flex
+    alignSelf: "flex-start",
   };
 
   const buttonContainerStyle = {
@@ -33,7 +36,7 @@ export default function UserPanel({ onSelect }) {
     border: "1px solid #e0e0e0",
     borderRadius: "5px",
     cursor: "pointer",
-    textAlign: "center", // Alineado a la izquierda para estilo lista
+    textAlign: "center",
     fontSize: "0.9rem",
     transition: "background-color 0.2s",
   };
@@ -47,7 +50,7 @@ export default function UserPanel({ onSelect }) {
         {menuItems.map((item) => (
           <button
             key={item.id}
-            onClick={() => onSelect(item.id)}
+            onClick={() => changeView(item.id)}
             style={buttonStyle}
             onMouseOver={(e) => (e.target.style.backgroundColor = "#e9ecef")}
             onMouseOut={(e) => (e.target.style.backgroundColor = "#f8f9fa")}
