@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\InterestingPlaceController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Api\Auth\ApiLoginController;
 use App\Http\Controllers\Api\Auth\ApiRegisterController;
+use App\Http\Controllers\Api\CommentController;
 
 Route::post('/register-api', [ApiRegisterController::class, 'register']);
 Route::post('/register', [RegisteredUserController::class, 'store']);
@@ -56,6 +57,9 @@ Route::middleware('MULTI-AUTH')->group(function () {  // Protegit per 'auth:sanc
     Route::get('/interesting-places/{interestingPlace}', [InterestingPlaceController::class, 'show']);
     Route::put('/interesting-places/{interestingPlace}', [InterestingPlaceController::class, 'update']);
     Route::delete('/interesting-places/{interestingPlace}', [InterestingPlaceController::class, 'destroy']);
+
+    // Rutes 'comments'
+    Route::get('/comments', [CommentController::class, 'index']);
 });
 
 

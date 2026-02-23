@@ -12,7 +12,7 @@ class CommentController extends Controller
     {
         //Ordenados de más reciente a más antiguo
         $query = Comment::with(['user', 'meeting.trek'])
-            ->where('validat', true) // Solo comentarios validados
+            ->where('status', 'y') // Solo comentarios validados (status: 'y' = yes)
             ->latest();
 
         // Filtro opcional por excursión

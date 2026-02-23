@@ -7,6 +7,7 @@ import Contact from "./components/Contact/Contact";
 import Footer from "./components/Footer";
 import AuthPage from "./components/AuthPage/AuthPage";
 import HomePage from "./components/HomePage";
+import CommentSection from "./components/CommentSection/CommentSection";
 import MoreInfo from "./components/FAQ/FAQ";
 import TrekDetail from "./components/TrekDetail/TrekDetail";
 import PlaceDetail from "./components/PlaceDetail/PlaceDetail";
@@ -43,6 +44,10 @@ function App() {
     // 3. VISTA DE CONTACTO
     if (activeView === "contact") {
       return <Contact />;
+    }
+
+    if (activeView === "comments") {
+      return <CommentSection />;
     }
 
     // 4. VISTA DE MÁS INFORMACIÓN

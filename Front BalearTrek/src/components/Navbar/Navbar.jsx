@@ -24,6 +24,7 @@ export default function Navbar() {
         <button onClick={() => changeView("interesting-places")}>
           Lugares
         </button>
+        <button onClick={() => changeView("comments")}>Comentarios</button>
         <button onClick={() => changeView("more-info")}>FAQ</button>
         <button onClick={() => changeView("contact")}>Contacto</button>
       </div>
