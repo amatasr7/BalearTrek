@@ -3,7 +3,7 @@ import { useApp } from "../../context/useApp";
 import "./Navbar.css";
 
 export default function Navbar() {
-  const { changeView } = useApp();
+  const { changeView, isAuthenticated, logout } = useApp();
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = (e) => {
@@ -30,23 +30,23 @@ export default function Navbar() {
       </div>
 
       <div className="navbar-actions">
-        <form onSubmit={handleSearch} className="search-bar">
-          <input
-            type="text"
-            placeholder="Busca excursiones..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <button type="submit">🔍</button>
-        </form>
-
-        <button
-          className="login-btn"
-          onClick={() => changeView("auth")}
-          title="Login / Register"
-        >
-          Inicia sesión
-        </button>
+        {isAuthenticated ? (
+          <button
+            className="login-btn"
+            onClick={() => logout()}
+            title="Cerrar sesión"
+          >
+            Cerrar sesión
+          </button>
+        ) : (
+          <button
+            className="login-btn"
+            onClick={() => changeView("auth")}
+            title="Login / Register"
+          >
+            Inicia sesión
+          </button>
+        )}
       </div>
     </nav>
   );

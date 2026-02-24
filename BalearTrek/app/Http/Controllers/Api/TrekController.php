@@ -216,4 +216,16 @@ class TrekController extends Controller
         return (new TrekResource($trek))->additional(['meta' => 'Trek trobat correctament']);
     }
 
+public function getFeatured()
+    {
+        // Criterio: Las 3 excursiones con mejor puntuación
+        $featured = Trek::orderByDesc('totalScore') 
+            ->take(3)
+            ->get();
+
+        return response()->json([
+            'data' => $featured,
+            'criteria' => 'Basado en la puntuación de los usuarios'
+        ]);
+    }
 }

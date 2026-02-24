@@ -10,7 +10,6 @@ function safeText(value) {
     if (value.nom) return String(value.nom);
     if (value.title) return String(value.title);
     if (value.registre) return String(value.registre);
-    // fallback: try toJSON or toString
     try {
       return JSON.stringify(value);
     } catch (e) {
@@ -37,14 +36,14 @@ export default function PlaceDetail({ place }) {
           <strong>Coordenadas:</strong> {safeText(place.gps) || "—"}
         </div>
         <div className="place-description">
-          <h2>Descripció</h2>
+          <h2>Descripción</h2>
           <p>
             {safeText(place.description) || "No hay descripción disponible."}
           </p>
         </div>
 
         <div className="place-treks">
-          <h2>Excursions que lo incluyen</h2>
+          <h2>Excursiones que lo incluyen</h2>
           {Array.isArray(place.treks) && place.treks.length ? (
             <ul>
               {place.treks.map((t) => (
@@ -54,7 +53,7 @@ export default function PlaceDetail({ place }) {
               ))}
             </ul>
           ) : (
-            <p>No s'ha trobat cap excursió que contingui aquest lloc.</p>
+            <p>No se ha encontrado ninguna excursión que incluya este lugar.</p>
           )}
         </div>
       </section>

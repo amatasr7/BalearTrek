@@ -1,150 +1,158 @@
+/* Contenedor principal de la sección */
 .balear-comments {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.95),
-    rgba(255, 255, 255, 0.98)
-  );
-  border: 1px solid var(--border);
+  padding: 20px;
+  background: transparent; /* Quitamos el gradiente para que no choque con el fondo */
 }
+
 .balear-comments h2 {
   color: var(--primary);
   font-weight: 800;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
 }
+
+/* Rejilla unificada con .meetings-grid */
+.balear-comments .grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+/* Estilo de la tarjeta (Copiado de .meeting-card) */
 .comment-card {
   background: var(--white);
-  padding: 18px;
+  padding: 20px;
   border-radius: 12px;
+  box-shadow: var(--shadow);
+  border-top: 4px solid var(--secondary); /* El borde característico */
+  text-align: left;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
+
 .comment-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
+
+/* Cabecera de la tarjeta */
 .comment-card .card-header {
-  margin-bottom: 12px;
+  margin-bottom: 15px;
 }
+
 .comment-card .card-header p {
-  margin: 0;
+  margin: 0 0 8px 0;
   color: var(--primary);
+  font-size: 16px;
   font-weight: 700;
+  line-height: 1.3;
 }
+
+/* Etiquetas (Subtítulos) */
 .comment-card .card-subtitle {
   display: inline-block;
-  background: #f4f6f8;
-  color: #6b7280;
+  background: #f0f0f0;
+  color: #666;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
 }
+
+/* Detalles internos */
 .comment-card .detail-item {
   margin: 8px 0;
   font-size: 13px;
   color: #555;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
 }
+
+/* Imagen del comentario (si existe) */
 .comment-card img {
-  width: 100%;
+  width: calc(100% + 40px); /* Ajuste para que toque los bordes si quieres */
+  margin: -20px -20px 15px -20px;
   height: 160px;
   object-fit: cover;
+  border-radius: 12px 12px 0 0;
 }
+
+/* Estrellas y textos */
 .balear-comments .text-amber-400 {
   color: #f59e0b;
+  font-weight: bold;
 }
+
 .balear-comments p {
   color: #334155;
+  line-height: 1.5;
 }
-/* Pagination buttons */
+
+/* Paginación - Botones estilo .card-button */
 .balear-comments .flex.justify-center button {
   min-width: 44px;
-  padding: 8px 12px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--white);
+  color: var(--primary);
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 0 5px;
 }
+
 .balear-comments .flex.justify-center button:hover:not(:disabled) {
   background: var(--secondary);
   color: white;
   border-color: var(--secondary);
+  transform: scale(1.05);
 }
+
 .balear-comments .flex.justify-center button[disabled] {
   opacity: 0.45;
   cursor: not-allowed;
 }
+
+/* Responsividad unificada */
 @media (max-width: 1024px) {
   .balear-comments .grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
 @media (max-width: 768px) {
   .balear-comments .grid {
     grid-template-columns: 1fr;
   }
+
+  .comment-card .card-header p {
+    font-size: 15px;
+  }
 }
-.balear-comments {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.95),
-    rgba(255, 255, 255, 0.98)
-  );
-  border: 1px solid var(--border);
+/* Este es el contenedor blanco que envuelve toda la sección */
+.comments-container-white {
+  background-color: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  margin: 10px; /* Separación del borde de la pantalla */
 }
 
+/* Ajustamos el título para que respire dentro del cuadro blanco */
 .balear-comments h2 {
-  color: var(--primary);
-  font-weight: 800;
-}
-
-.balear-comments button {
-  font-family: inherit;
-}
-
-.balear-comments .grid > div {
-  transition:
-    transform 150ms ease,
-    box-shadow 150ms ease;
-}
-
-.balear-comments .grid > div:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
-}
-
-.balear-comments .w-12 {
-  border: 2px solid rgba(0, 164, 232, 0.12);
-}
-
-.balear-comments .text-amber-400 {
-  color: #f59e0b; /* amber */
-  letter-spacing: 0.5px;
-}
-
-.balear-comments p {
-  color: #334155;
-}
-
-.balear-comments .rounded-lg.overflow-hidden img {
-  border-left: 4px solid var(--secondary);
-}
-
-.balear-comments .flex.justify-between.items-center.mt-6 {
-  color: var(--primary);
-}
-
-.balear-comments .flex.justify-center button {
-  min-width: 44px;
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: white;
-  color: var(--primary);
-  font-weight: 700;
-}
-
-.balear-comments .flex.justify-center button:hover:not(:disabled) {
-  background: var(--secondary);
-  color: white;
-  border-color: var(--secondary);
-}
-
-.balear-comments .flex.justify-center button[disabled] {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
-@media (max-width: 768px) {
-  .balear-comments .grid {
-    grid-template-columns: 1fr;
-  }
+  margin-top: 0;
+  margin-bottom: 25px;
+  border-bottom: 2px solid var(--secondary);
+  display: inline-block;
+  padding-bottom: 5px;
 }

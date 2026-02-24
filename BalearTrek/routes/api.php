@@ -43,6 +43,7 @@ Route::middleware('MULTI-AUTH')->group(function () {  // Protegit per 'auth:sanc
     Route::put('/treks/{trek}', [TrekController::class, 'update']);
     Route::delete('/treks/{trek}', [TrekController::class, 'destroy']);
     Route::get('/trek/find/{value}', [TrekController::class, 'find']);  // 'find' substitueix 'show'
+    Route::get('/featured-treks', [TrekController::class, 'featured']); // excursiones destacadas
 
     // Rutes 'meetings'
     Route::get('/meetings', [MeetingController::class, 'index']);

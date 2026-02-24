@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\InterestingPlace;
 use Illuminate\Http\Request;
+use App\Http\Resources\InterestingPlaceDetailResource;
+
 
 class InterestingPlaceController extends Controller
 {
@@ -61,7 +63,7 @@ class InterestingPlaceController extends Controller
             $interestingPlace = InterestingPlace::with(['placeType', 'treks'])->findOrFail($id);
             
             return response()->json([
-                'data' => new \App\Http\Resources\InterestingPlaceDetailResource($interestingPlace),
+                'data' => new InterestingPlaceDetailResource($interestingPlace),
                 'meta' => 'Place of interest mostrado correctamente'
             ]);
         } catch (\Exception $e) {

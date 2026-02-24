@@ -28,9 +28,12 @@ function App() {
         <>
           <HeroSlider />
           <div className="meetings-grid">
-            <MeetingCard title="Paseo por la Tramuntana" date="14/01" />
-            <MeetingCard title="Un día en el Aquarium" date="20/02" />
-            <MeetingCard title="Torrada en Lluc" date="15/02" />
+            <MeetingCard title="Camí de Sa Foradada" date="2026/04/24" />
+            <MeetingCard title="Ruta de Formentor" date="2026/04/21" />
+            <MeetingCard
+              title="Serra de Tramuntana Central"
+              date="2026/04/20"
+            />
           </div>
         </>
       );
@@ -64,9 +67,6 @@ function App() {
         if (base === "treks")
           return (
             <section className="dynamic-view">
-              <button onClick={() => changeView("treks")} className="back-btn">
-                ← Volver a Excursions
-              </button>
               <TrekDetail trek={selectedItem} />
             </section>
           );
@@ -74,12 +74,6 @@ function App() {
         if (base === "meetings")
           return (
             <section className="dynamic-view">
-              <button
-                onClick={() => changeView("meetings")}
-                className="back-btn"
-              >
-                ← Volver a Quedadas
-              </button>
               <MeetingDetail meeting={selectedItem} />
             </section>
           );
@@ -87,12 +81,6 @@ function App() {
         if (base === "interesting-places")
           return (
             <section className="dynamic-view">
-              <button
-                onClick={() => changeView("interesting-places")}
-                className="back-btn"
-              >
-                ← Volver a Llocs
-              </button>
               <PlaceDetail place={selectedItem} />
             </section>
           );
@@ -101,9 +89,6 @@ function App() {
       // Si no hay selectedItem, mostrar estado claro: loading / error / fallback
       return (
         <section className="dynamic-view">
-          <button onClick={() => changeView(base)} className="back-btn">
-            ← Volver
-          </button>
           <h2>Detalle: {base.replace("-", " ").toUpperCase()}</h2>
           {loading ? (
             <p>Cargando detalle...</p>
@@ -138,9 +123,6 @@ function App() {
 
     return (
       <section className="dynamic-view">
-        <button onClick={() => changeView("home")} className="back-btn">
-          ← Back to Home
-        </button>
         <h2>Section: {activeView.replace("-", " ").toUpperCase()}</h2>
 
         {/* Mostrar filtros solo para vistas que lo permiten */}
