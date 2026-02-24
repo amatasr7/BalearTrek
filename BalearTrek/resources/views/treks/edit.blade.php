@@ -19,27 +19,38 @@
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <div>
-                            <label for="distance" class="block text-sm font-medium text-gray-700 mb-1">Distance (km)</label>
-                            <input type="number" step="0.1" name="distance" id="distance" value="{{ old('distance', $trek->distance) }}" 
-                                class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                        </div>
+                        <div class="mb-4">
+            <x-input-label for="municipality_id" value="Municipality" />
+            <select id="municipality_id" name="municipality_id"
+                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+
+                @foreach ($municipalities as $municipality)
+                    <option value="{{ $municipality->id }}"
+                        {{ $trek->municipality_id == $municipality->id ? 'selected' : '' }}>
+                        {{ $municipality->name }}
+                    </option>
+                @endforeach
+
+            </select>
+            <x-input-error :messages="$errors->get('municipality_id')" class="mt-2" />
+        </div>
                         <br>
-                        <div>
-                            <label for="duration" class="block text-sm font-medium text-gray-700 mb-1">Duration (min)</label>
-                            <input type="number" name="duration" id="duration" value="{{ old('duration', $trek->duration) }}" 
-                                class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                        </div>
+                        <div class="mb-4">
+            <div class="grid grid-cols-2 gap-2 mt-2">
+                @foreach ($places as $place)
+                    <label class="flex items-center gap-2">
+                        <input type="checkbox"
+                            name="interesting_places[]"
+                            value="{{ $place->id }}"
+                            {{ $trek->interestingPlaces->contains($place->id) ? 'checked' : '' }}>
+                        {{ $place->name }}
+                    </label>
+                @endforeach
+            </div>
+        </div>
                     </div>
 
-                    <div class="mb-4">
-                        <label for="difficulty" class="block text-sm font-medium text-gray-700 mb-1">Difficulty</label>
-                        <select name="difficulty" id="difficulty" class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                            <option value="Fàcil" {{ $trek->difficulty == 'Fàcil' ? 'selected' : '' }}>Easy</option>
-                            <option value="Moderada" {{ $trek->difficulty == 'Moderada' ? 'selected' : '' }}>Moderate</option>
-                            <option value="Difícil" {{ $trek->difficulty == 'Difícil' ? 'selected' : '' }}>Difficult</option>
-                        </select>
-                    </div>
+                   
 
                     <div class="mb-6">
                         <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
@@ -56,4 +67,21 @@
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create( document.querySelector( '#description' ), {
+                toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
+            })
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+
+    <style>
+        .ck-editor__editable_inline {
+            min-height: 200px;
+        }
+    </style>
 </x-app-layout>

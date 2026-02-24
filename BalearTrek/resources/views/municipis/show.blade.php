@@ -17,7 +17,6 @@
                 <div class="text-sm text-gray-600 space-y-1 mb-6">
                     <p><span class="font-bold">Island:</span> {{ $municipi->island->name ?? 'N/A' }}</p>
                     <p><span class="font-bold">Zone:</span> {{ $municipi->zone->name ?? 'N/A' }}</p>
-                    <p><span class="font-bold text-xs uppercase text-gray-400">posted: yes</span></p>
                     
                     <div class="mt-4 pt-4 border-t border-gray-100 text-xs text-gray-400">
                         <p>created at: {{ $municipi->created_at->format('Y-m-d H:i:s') }}</p>

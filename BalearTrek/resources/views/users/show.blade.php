@@ -40,7 +40,11 @@
 
                     <div class="mt-10 flex gap-2">
                         <a href="{{ route('users.edit', $user->id) }}" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded font-bold transition shadow-sm">Edit User</a>
+                        <a href="{{ route('users.show', $user->id) }}" class="bg-green-500 hover:bg-green-600 text-white px-4 py-1 rounded text-sm font-bold transition">
+                            Show
+                        </a>                    
                     </div>
+                   
                 </div>
             </div>
         </div>

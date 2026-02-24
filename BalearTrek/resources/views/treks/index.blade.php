@@ -14,8 +14,19 @@
                     </div>
 
                     <div class="text-sm text-gray-600 space-y-1 mb-6">
-                        <p><span class="font-bold">Distance:</span> {{ $trek->distance }} km</p>
-                        <p><span class="font-bold">Duration:</span> {{ $trek->duration }} minutes</p>
+                        <p class="mb-4 text-sm">
+            <strong>Municipality:</strong> {{ $trek->municipality->name ?? '—' }}
+        </p>
+                        <p class="mb-4 text-sm">
+            <strong>Interesting Places:</strong>
+        </p>
+        <div class="mb-4">
+            @foreach ($trek->interestingPlaces as $place)
+                <span>
+                    {{ $place->name }},
+                </span>
+            @endforeach
+        </div>
                     </div>
 
                     <div class="flex gap-2">

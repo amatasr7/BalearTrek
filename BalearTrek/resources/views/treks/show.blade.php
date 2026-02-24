@@ -16,8 +16,25 @@
                 </div>
 
                 <div class="text-sm text-gray-600 space-y-1 mb-6">
-                    <p><span class="font-bold">Distance:</span> {{ $trek->distance }} km</p>
-                    <p><span class="font-bold">Duration:</span> {{ $trek->duration }} minutes</p>
+                    <div class="p-6 text-surface">
+
+        <h5 class="mb-2 text-xl font-medium leading-tight">
+            {{ $trek->name }}
+        </h5>
+
+        <p class="mb-4 text-sm">
+            <strong>Municipality:</strong> {{ $trek->municipality->name ?? '—' }}
+        </p>
+        <p class="mb-4 text-sm">
+            <strong>Interesting Places:</strong>
+        </p>
+        <div class="mb-4">
+            @foreach ($trek->interestingPlaces as $place)
+                <span>
+                    {{ $place->name }},
+                </span>
+            @endforeach
+        </div>
                     <p class="italic py-2 text-gray-500">{{ $trek->description }}</p>
                     
                     <div class="mt-4 pt-4 border-t border-gray-100 text-xs text-gray-400">

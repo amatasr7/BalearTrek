@@ -20,13 +20,12 @@
                     <div class="grid grid-cols-2 gap-4 mb-4">
                         <div>
                             <label for="distance" class="block text-sm font-medium text-gray-700 mb-1">Distance (km)</label>
-                            <input type="number" step="0.1" name="distance" id="distance" 
+                            <input type="number" step="0.1" name="distance" id="distance" value="{{ old('distance') }}"
                                 class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
                         </div>
-                        <br>
                         <div>
                             <label for="duration" class="block text-sm font-medium text-gray-700 mb-1">Duration (min)</label>
-                            <input type="number" name="duration" id="duration" 
+                            <input type="number" name="duration" id="duration" value="{{ old('duration') }}"
                                 class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
                         </div>
                     </div>
@@ -34,15 +33,16 @@
                     <div class="mb-4">
                         <label for="difficulty" class="block text-sm font-medium text-gray-700 mb-1">Difficulty</label>
                         <select name="difficulty" id="difficulty" class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                            <option value="Fàcil">Easy</option>
-                            <option value="Moderada">Moderate</option>
-                            <option value="Difícil">Difficult</option>
+                            <option value="Fàcil" {{ old('difficulty') == 'Fàcil' ? 'selected' : '' }}>Easy</option>
+                            <option value="Moderada" {{ old('difficulty') == 'Moderada' ? 'selected' : '' }}>Moderate</option>
+                            <option value="Difícil" {{ old('difficulty') == 'Difícil' ? 'selected' : '' }}>Difficult</option>
                         </select>
                     </div>
 
                     <div class="mb-6">
                         <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                        <textarea name="description" id="description" rows="3" class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
+                        <textarea name="description" id="description" rows="3" 
+                            class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">{{ old('description') }}</textarea>
                     </div>
 
                     <div class="flex items-center justify-start mt-4">
@@ -54,4 +54,21 @@
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#description'), {
+                toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote'],
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+
+    <style>
+        .ck-editor__editable_inline {
+            min-height: 200px;
+        }
+    </style>
 </x-app-layout>
