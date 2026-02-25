@@ -21,21 +21,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('/treks', \App\Http\Controllers\Api\TrekController::class);
+    // Ruta para los usuarios
+    Route::resource('users', UserController::class);
+    // Rutas para la gestión de las quedadas
     Route::resource('interesting-places', InterestingPlaceController::class);
     Route::resource('municipis', \App\Http\Controllers\MunicipalityController::class);
     Route::resource('treks', TrekController::class);
     Route::resource('meetings', \App\Http\Controllers\MeetingController::class);
+    // Rutas para los comentarios
     Route::get('/comments', [CommentController::class, 'index'])->name('comments.index');
     Route::get('/comments/{comment}', [CommentController::class, 'show'])->name('comments.show');
     Route::patch('/comments/{comment}/validate', [CommentController::class, 'validateComment'])->name('comments.validate');
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
-    Route::resource('users', UserController::class);
 });
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
-    // Listado y búsqueda
-    Route::get('/users', [UserController::class, 'index'])->name('users.index');
-    // Actualización (Rol, Estado, etc.)
-    Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
-});
+
 require __DIR__.'/auth.php';

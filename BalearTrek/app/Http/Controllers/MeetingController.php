@@ -52,22 +52,22 @@ class MeetingController extends Controller
     }
 
     public function update(Request $request, string $id)
-    {
-        $meeting = Meeting::findOrFail($id);
+{
+    $meeting = Meeting::findOrFail($id);
 
-        $request->validate([
-            'trek_id' => 'required|exists:treks,id',
-            'user_id' => 'required|exists:users,id',
-            'day' => 'required|date',
-            'time' => 'required',
-            'appDateIni' => 'required|date',
-            'appDateEnd' => 'required|date|after_or_equal:appDateIni',
-        ]);
+    $validated = $request->validate([
+        'trek_id' => 'required|exists:treks,id',
+        'user_id' => 'required|exists:users,id',
+        'day' => 'required|date',
+        'time' => 'required',
+        'appDateIni' => 'required|date',
+        'appDateEnd' => 'required|date|after_or_equal:appDateIni',
+    ]);
 
-        $meeting->update($request->all());
+    $meeting->update($validated);
 
-        return redirect()->route('meetings.index')->with('success', 'Trobada actualitzada correctament');
-    }
+    return redirect()->route('meetings.index')->with('success', 'Trobada actualitzada correctament');
+}
 
     public function destroy(string $id)
     {

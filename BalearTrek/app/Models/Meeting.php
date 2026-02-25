@@ -9,14 +9,15 @@ use App\Models\Comment;
 class Meeting extends Model
 {
     protected $fillable = [
-    'user_id',    // El guía
-    'trek_id',    // La excursión
+    'user_id',
+    'trek_id',
     'day',
     'time',
-    'appDateIni', // Fecha inicio inscripciones
-    'appDateEnd', // Fecha fin inscripciones
+    'appDateIni',
+    'appDateEnd',
     'totalScore',
     'countScore',
+    'publicat',
 ];
 
 

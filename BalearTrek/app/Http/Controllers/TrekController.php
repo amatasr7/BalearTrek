@@ -22,29 +22,31 @@ class TrekController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'regNumber' => 'required|unique:treks|max:20',
-            'name' => 'required|max:100',
-            'description' => 'nullable|string',
-            'municipality_id' => 'required|exists:municipalities,id',
-            'places' => 'required|array'
-        ]);
+{
+    $request->validate([
+        'regNumber' => 'required|unique:treks|max:20',
+        'name' => 'required|max:100',
+        'description' => 'nullable|string',
+        'municipality_id' => 'required|exists:municipalities,id',
+        'interesting_places' => 'required|array',
+        'difficulty' => 'nullable|string',
+    ]);
 
-        // 1. Creamos la Trek
-        $trek = Trek::create($request->only(['regNumber', 'name', 'description', 'municipality_id']));
+    // 1. Creamos la Trek con TODOS los campos necesarios
+    $trek = Trek::create($request->only([
+        'regNumber', 'name', 'description', 'municipality_id', 'difficulty'
+    ]));
 
-        // 2. Preparamos los IDs de los lugares con el campo 'order'
-        // Esto soluciona el error "Field order doesn't have a default value"
-        $placesWithOrder = collect($request->input('places'))->mapWithKeys(function ($id) {
-            return [$id => ['order' => 0]]; 
-        })->toArray();
+    // 2. Preparamos los IDs (usando el nombre correcto: interesting_places)
+    $placesWithOrder = collect($request->input('interesting_places'))->mapWithKeys(function ($id) {
+        return [$id => ['order' => 0]]; 
+    })->toArray();
 
-        // 3. Sincronizamos
-        $trek->interestingPlaces()->sync($placesWithOrder);
+    // 3. Sincronizamos
+    $trek->interestingPlaces()->sync($placesWithOrder);
 
-        return redirect()->route('treks.index')->with('success', 'Excursió creada correctament!');
-    }
+    return redirect()->route('treks.index')->with('success', 'Excursió creada correctament!');
+}
 
     public function edit(string $id)
     {

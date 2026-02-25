@@ -33,5 +33,27 @@
             </main>
         </div>
         <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                // Seleccionamos todos los formularios que tengan validación
+                const forms = document.querySelectorAll('form');
+                
+                forms.forEach(form => {
+                    const inputs = form.querySelectorAll('input[required], select[required], textarea[required]');
+                    
+                    inputs.forEach(input => {
+                        // Cuando el campo es inválido
+                        input.addEventListener('invalid', function() {
+                            this.setCustomValidity('Este campo es obligatorio! y este mensaje es personalizado!');
+                        });
+
+                        // Limpiar el mensaje cuando el usuario empieza a escribir
+                        input.addEventListener('input', function() {
+                            this.setCustomValidity('');
+                        });
+                    });
+                });
+            });
+        </script>
     </body>
 </html>

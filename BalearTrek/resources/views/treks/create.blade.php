@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Create a Trek') }}
+            {{ __('Create a New Trek') }}
         </h2>
     </x-slot>
 
@@ -12,42 +12,60 @@
                     @csrf
                     
                     <div class="mb-4">
-                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Title of the Trek</label>
                         <input type="text" name="name" id="name" value="{{ old('name') }}" 
                             class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+                        <x-input-error :messages="$errors->get('name')" class="mt-2" />
                     </div>
-
-                    <div class="grid grid-cols-2 gap-4 mb-4">
-                        <div>
-                            <label for="distance" class="block text-sm font-medium text-gray-700 mb-1">Distance (km)</label>
-                            <input type="number" step="0.1" name="distance" id="distance" value="{{ old('distance') }}"
-                                class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                        </div>
-                        <div>
-                            <label for="duration" class="block text-sm font-medium text-gray-700 mb-1">Duration (min)</label>
-                            <input type="number" name="duration" id="duration" value="{{ old('duration') }}"
-                                class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                        </div>
-                    </div>
-
                     <div class="mb-4">
-                        <label for="difficulty" class="block text-sm font-medium text-gray-700 mb-1">Difficulty</label>
-                        <select name="difficulty" id="difficulty" class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                            <option value="Fàcil" {{ old('difficulty') == 'Fàcil' ? 'selected' : '' }}>Easy</option>
-                            <option value="Moderada" {{ old('difficulty') == 'Moderada' ? 'selected' : '' }}>Moderate</option>
-                            <option value="Difícil" {{ old('difficulty') == 'Difícil' ? 'selected' : '' }}>Difficult</option>
-                        </select>
+                        <label for="regNumber" class="block text-sm font-medium text-gray-700 mb-1">Registration Number</label>
+                        <input type="text" name="regNumber" id="regNumber" value="{{ old('regNumber') }}" 
+                            class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+                        <x-input-error :messages="$errors->get('regNumber')" class="mt-2" />
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div class="mb-4">
+                            <x-input-label for="municipality_id" value="Municipality" />
+                            <select id="municipality_id" name="municipality_id"
+                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                                <option value="" disabled selected>Select a municipality</option>
+                                @foreach ($municipalities as $municipality)
+                                    <option value="{{ $municipality->id }}"
+                                        {{ old('municipality_id') == $municipality->id ? 'selected' : '' }}>
+                                        {{ $municipality->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <x-input-error :messages="$errors->get('municipality_id')" class="mt-2" />
+                        </div>
+                    <br></br>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Interesting Places</label>
+                            <div class="grid grid-cols-2 gap-2 mt-2">
+                                @foreach ($places as $place)
+                                    <label class="flex items-center gap-2 text-sm text-gray-600">
+                                        <input type="checkbox"
+                                            name="interesting_places[]"
+                                            value="{{ $place->id }}"
+                                            {{ is_array(old('interesting_places')) && in_array($place->id, old('interesting_places')) ? 'checked' : '' }}>
+                                        {{ $place->name }}
+                                    </label>
+                                @endforeach
+                            </div>
+                            <x-input-error :messages="$errors->get('interesting_places')" class="mt-2" />
+                        </div>
                     </div>
 
                     <div class="mb-6">
                         <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                        <textarea name="description" id="description" rows="3" 
+                        <textarea name="description" id="description" rows="4" 
                             class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">{{ old('description') }}</textarea>
+                        <x-input-error :messages="$errors->get('description')" class="mt-2" />
                     </div>
 
                     <div class="flex items-center justify-start mt-4">
-                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded shadow transition">
-                            Create
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded shadow transition duration-150">
+                            Create Trek
                         </button>
                     </div>
                 </form>
@@ -58,12 +76,12 @@
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
     <script>
         ClassicEditor
-            .create(document.querySelector('#description'), {
-                toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote'],
+            .create( document.querySelector( '#description' ), {
+                toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
             })
-            .catch(error => {
-                console.error(error);
-            });
+            .catch( error => {
+                console.error( error );
+            } );
     </script>
 
     <style>

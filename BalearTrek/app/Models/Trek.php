@@ -17,6 +17,7 @@ class Trek extends Model
     'totalScore',    
     'countScore',
     'municipality_id',
+    'difficulty',
 ];
 
     public function meetings()

@@ -16,7 +16,6 @@ export default function Navbar() {
       <div className="navbar-logo">
         <h1>BalearTrek</h1>
       </div>
-
       <div className="nav-links">
         <button onClick={() => changeView("home")}>Home</button>
         <button onClick={() => changeView("meetings")}>Quedadas</button>
@@ -28,7 +27,6 @@ export default function Navbar() {
         <button onClick={() => changeView("more-info")}>FAQ</button>
         <button onClick={() => changeView("contact")}>Contacto</button>
       </div>
-
       <div className="navbar-actions">
         {isAuthenticated ? (
           <button
