@@ -11,7 +11,7 @@ class MeetingController extends Controller
 {
     public function index()
     {
-        $meetings = Meeting::with(['trek', 'guide'])->paginate(10); 
+        $meetings = Meeting::with(['trek', 'guide'])->orderBy('created_at', 'desc')->paginate(10); 
         return view('meetings.index', compact('meetings'));
     }
 

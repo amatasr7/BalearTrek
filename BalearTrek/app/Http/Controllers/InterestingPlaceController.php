@@ -11,7 +11,7 @@ class InterestingPlaceController extends Controller
     public function index()
     {
         // 1. La variable se llama $interestingPlaces (en plural)
-        $interestingPlaces = InterestingPlace::with('placeType')->paginate(10);
+        $interestingPlaces = InterestingPlace::with('placeType')->orderBy('created_at', 'desc')->paginate(10);
 
         // 2. La vista usa puntos para las carpetas y guion bajo para el archivo
         // 3. Pasamos 'interestingPlaces' (el mismo nombre que arriba)

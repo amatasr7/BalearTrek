@@ -10,7 +10,7 @@ class TrekController extends Controller
 {
     public function index()
     {
-        $treks = Trek::with('municipality')->paginate(10);
+        $treks = Trek::with('municipality')->orderBy('created_at', 'desc')->paginate(10);
         return view('treks.index', compact('treks'));
     }
 
@@ -37,7 +37,7 @@ class TrekController extends Controller
         'regNumber', 'name', 'description', 'municipality_id', 'difficulty'
     ]));
 
-    // 2. Preparamos los IDs (usando el nombre correcto: interesting_places)
+    // 2. Preparamos los IDs 
     $placesWithOrder = collect($request->input('interesting_places'))->mapWithKeys(function ($id) {
         return [$id => ['order' => 0]]; 
     })->toArray();
@@ -59,10 +59,8 @@ class TrekController extends Controller
 
     public function update(Request $request, string $id)
     {
-        // 1. Buscamos la Trek o lanzamos 404 si no existe
         $trek = Trek::findOrFail($id);
 
-        // 2. Validamos los datos básicos
         $request->validate([
             'regNumber' => 'required|max:20|unique:treks,regNumber,' . $id,
             'name' => 'required|max:100',
@@ -71,16 +69,13 @@ class TrekController extends Controller
             'places' => 'required|array'
         ]);
 
-        // 3. Actualizamos los campos de la tabla 'treks'
         $trek->update($request->only(['regNumber', 'name', 'description', 'municipality_id']));
 
         // 4. Preparamos los IDs de los lugares para la tabla pivote con 'order' = 0
-        // Esto evita el error: Field 'order' doesn't have a default value
         $placesWithOrder = collect($request->input('places'))->mapWithKeys(function ($id) {
             return [$id => ['order' => 0]];
         })->toArray();
 
-        // 5. Sincronizamos (borra lo viejo y pone lo nuevo en la tabla intermedia)
         $trek->interestingPlaces()->sync($placesWithOrder);
 
         return redirect()->route('treks.index')
@@ -91,29 +86,21 @@ class TrekController extends Controller
     {
         $trek = Trek::findOrFail($id);
 
-        // 1. Desvincular lugares interesantes (pivote)
         $trek->interestingPlaces()->detach();
 
-        // 2. Navegar por las reuniones
         foreach ($trek->meetings as $meeting) {
             
-            // 3. Desvincular usuarios inscritos (pivote meeting_user)
             $meeting->users()->detach();
 
-            // 4. Navegar por los comentarios de la reunión para borrar sus imágenes
             foreach ($meeting->comments as $comment) {
-                // 5. Borrar imágenes del comentario (esto soluciona tu error actual)
                 $comment->images()->delete();
             }
 
-            // 6. Borrar todos los comentarios de la reunión
             $meeting->comments()->delete();
             
-            // 7. Borrar la reunión
             $meeting->delete();
         }
 
-        // 8. Por fin, borrar el Trek
         $trek->delete();
 
         return redirect()->route('treks.index')->with('success', 'Excursió eliminada amb tota la seva informació.');

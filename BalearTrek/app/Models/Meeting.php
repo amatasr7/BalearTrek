@@ -17,7 +17,6 @@ class Meeting extends Model
     'appDateEnd',
     'totalScore',
     'countScore',
-    'publicat',
 ];
 
 

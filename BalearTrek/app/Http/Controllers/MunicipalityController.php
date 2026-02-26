@@ -13,7 +13,7 @@ class MunicipalityController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
-        $municipis = Municipality::with(['island', 'zone'])->paginate(10);
+        $municipis = Municipality::with(['island', 'zone'])->orderBy('created_at', 'desc')->paginate(10);
         return view('municipis.index', compact('municipis'));
     }
 
