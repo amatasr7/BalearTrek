@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Role;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Support\Facades\Hash;
@@ -17,7 +18,8 @@ class UserController extends Controller
     // Método para mostrar el formulario de creación
     public function create()
     {
-        return view('users.create');
+        $roles = Role::orderBy('name')->get();
+        return view('users.create', compact('roles'));
     }
 
     // Método para guardar un nuevo usuario

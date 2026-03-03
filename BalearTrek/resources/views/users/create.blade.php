@@ -15,9 +15,24 @@
                             @error('name')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
                         </div>
                         <div>
+                            <label class="block font-bold text-gray-700 uppercase text-xs mb-2">Last Name</label>
+                            <input type="text" name="lastname" value="{{ old('lastname') }}" class="w-full border-gray-300 rounded-md shadow-sm @error('lastname') border-red-500 @enderror">
+                            @error('lastname')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
+                        </div>
+                        <div>
+                            <label class="block font-bold text-gray-700 uppercase text-xs mb-2">DNI</label>
+                            <input type="text" name="dni" value="{{ old('dni') }}" class="w-full border-gray-300 rounded-md shadow-sm @error('dni') border-red-500 @enderror">
+                            @error('dni')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
+                        </div>
+                        <div>
                             <label class="block font-bold text-gray-700 uppercase text-xs mb-2">Email</label>
                             <input type="email" name="email" value="{{ old('email') }}" class="w-full border-gray-300 rounded-md shadow-sm @error('email') border-red-500 @enderror">
                             @error('email')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
+                        </div>
+                        <div>
+                            <label class="block font-bold text-gray-700 uppercase text-xs mb-2">Phone</label>
+                            <input type="text" name="phone" value="{{ old('phone') }}" class="w-full border-gray-300 rounded-md shadow-sm @error('phone') border-red-500 @enderror">
+                            @error('phone')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
                         </div>
                         <div>
                             <label class="block font-bold text-gray-700 uppercase text-xs mb-2">Password</label>
@@ -25,8 +40,15 @@
                             @error('password')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
                         </div>
                         <div>
-                            <label class="block font-bold text-gray-700 uppercase text-xs mb-2">Role ID</label>
-                            <input type="number" name="role_id" value="{{ old('role_id', 2) }}" class="w-full border-gray-300 rounded-md shadow-sm @error('role_id') border-red-500 @enderror">
+                            <label class="block font-bold text-gray-700 uppercase text-xs mb-2">Role</label>
+                            <select name="role_id" class="w-full border-gray-300 rounded-md shadow-sm @error('role_id') border-red-500 @enderror">
+                                <option value="">Select a role</option>
+                                @foreach ($roles as $role)
+                                    <option value="{{ $role->id }}" {{ old('role_id') == $role->id ? 'selected' : '' }}>
+                                        {{ ucfirst($role->name) }}
+                                    </option>
+                                @endforeach
+                            </select>
                             @error('role_id')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
                         </div>
                     </div>

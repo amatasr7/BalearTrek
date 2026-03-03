@@ -26,7 +26,7 @@ class User extends Authenticatable
         'phone',
         'password',
         'role_id',
-        'is_active',
+        'status',
     ];
 
     //protected $guarded = [
@@ -66,7 +66,6 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'is_active' => 'boolean',
         ];
     }
 
