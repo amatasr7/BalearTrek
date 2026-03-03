@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\Meeting;
 use App\Models\Trek;
 use App\Models\User;
-use App\Models\Role;
-use Illuminate\Http\Request;
+use App\Http\Requests\MeetingStoreRequest;
+use App\Http\Requests\MeetingUpdateRequest;
 
 class MeetingController extends Controller
 {
@@ -26,17 +26,9 @@ class MeetingController extends Controller
         return view('meetings.create', compact('treks', 'guides'));
     }
 
-    public function store(Request $request)
+    public function store(MeetingStoreRequest $request)
     {
-        $request->validate([
-            'date' => 'required|date|after:today',
-            'max_participants' => 'required|integer|min:1',
-            'trek_id' => 'required|exists:treks,id',
-            'user_id' => 'required|exists:users,id', // El guía
-        ]);
-
-        Meeting::create($request->all());
-
+        Meeting::create($request->validated());
         return redirect()->route('meetings.index')->with('success', 'Trobada creada!');
     }
 
@@ -51,23 +43,13 @@ class MeetingController extends Controller
         return view('meetings.edit', compact('meeting', 'treks', 'guides'));
     }
 
-    public function update(Request $request, string $id)
-{
-    $meeting = Meeting::findOrFail($id);
+    public function update(MeetingUpdateRequest $request, string $id)
+    {
+        $meeting = Meeting::findOrFail($id);
+        $meeting->update($request->validated());
 
-    $validated = $request->validate([
-        'trek_id' => 'required|exists:treks,id',
-        'user_id' => 'required|exists:users,id',
-        'day' => 'required|date',
-        'time' => 'required',
-        'appDateIni' => 'required|date',
-        'appDateEnd' => 'required|date|after_or_equal:appDateIni',
-    ]);
-
-    $meeting->update($validated);
-
-    return redirect()->route('meetings.index')->with('success', 'Trobada actualitzada correctament');
-}
+        return redirect()->route('meetings.index')->with('success', 'Trobada actualitzada correctament');
+    }
 
     public function destroy(string $id)
     {

@@ -33,7 +33,7 @@
                         <div>
                             <x-input-label for="municipality_id" value="Municipality" />
                             <select id="municipality_id" name="municipality_id"
-                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm @error('municipality_id') border-red-500 @enderror">
                                 @foreach ($municipalities as $municipality)
                                     <option value="{{ $municipality->id }}"
                                         {{ old('municipality_id', $trek->municipality_id) == $municipality->id ? 'selected' : '' }}>
@@ -64,7 +64,7 @@
                     <div class="mb-6">
                         <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
                         <textarea name="description" id="description" rows="4" 
-                            class="w-full border-gray-300 rounded-md shadow-sm">{{ old('description', $trek->description) }}</textarea>
+                            class="w-full border-gray-300 rounded-md shadow-sm @error('description') border-red-500 @enderror">{{ old('description', $trek->description) }}</textarea>
                         <x-input-error :messages="$errors->get('description')" class="mt-2" />
                     </div>
 

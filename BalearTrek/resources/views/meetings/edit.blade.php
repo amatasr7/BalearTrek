@@ -9,14 +9,13 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-8">
                 
-                {{-- Formulario --}}
                 <form action="{{ route('meetings.update', $meeting->id) }}" method="POST">
                     @csrf
                     @method('PUT')
                     
                     <div class="mb-4">
                         <label for="trek_id" class="block text-sm font-medium text-gray-700 mb-1">Trek / Excursión</label>
-                        <select name="trek_id" id="trek_id" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500">
+                        <select name="trek_id" id="trek_id" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 @error('trek_id') border-red-500 @enderror">
                             @foreach($treks as $trek)
                                 <option value="{{ $trek->id }}" {{ old('trek_id', $meeting->trek_id) == $trek->id ? 'selected' : '' }}>
                                     {{ $trek->name }}
@@ -30,14 +29,14 @@
                         <div>
                             <label for="day" class="block text-sm font-medium text-gray-700 mb-1">Meeting Date</label>
                             <input type="date" name="day" id="day" value="{{ old('day', $meeting->day) }}" 
-                                class="w-full border-gray-300 rounded-md shadow-sm">
+                                class="w-full border-gray-300 rounded-md shadow-sm @error('day') border-red-500 @enderror">
                             <x-input-error :messages="$errors->get('day')" class="mt-2" />
                         </div>
                         <br></br>
                         <div>
                             <label for="time" class="block text-sm font-medium text-gray-700 mb-1">Meeting Time</label>
                             <input type="time" name="time" id="time" value="{{ old('time', \Carbon\Carbon::parse($meeting->time)->format('H:i')) }}" 
-                                class="w-full border-gray-300 rounded-md shadow-sm">
+                                class="w-full border-gray-300 rounded-md shadow-sm @error('time') border-red-500 @enderror">
                             <x-input-error :messages="$errors->get('time')" class="mt-2" />
                         </div>
                     </div>
@@ -46,22 +45,21 @@
                         <div>
                             <label for="appDateIni" class="block text-sm font-medium text-gray-700 mb-1">Registration Start Date</label>
                             <input type="date" name="appDateIni" id="appDateIni" value="{{ old('appDateIni', $meeting->appDateIni) }}" 
-                                class="w-full border-gray-300 rounded-md shadow-sm">
+                                class="w-full border-gray-300 rounded-md shadow-sm @error('appDateIni') border-red-500 @enderror">
                             <x-input-error :messages="$errors->get('appDateIni')" class="mt-2" />
                         </div>
                         <br></br>
                         <div>
                             <label for="appDateEnd" class="block text-sm font-medium text-gray-700 mb-1">Registration End Date</label>
                             <input type="date" name="appDateEnd" id="appDateEnd" value="{{ old('appDateEnd', $meeting->appDateEnd) }}" 
-                                class="w-full border-gray-300 rounded-md shadow-sm">
+                                class="w-full border-gray-300 rounded-md shadow-sm @error('appDateEnd') border-red-500 @enderror">
                             <x-input-error :messages="$errors->get('appDateEnd')" class="mt-2" />
                         </div>
                     </div>
                     <br></br>
                     <div class="mb-4">
                         <label for="user_id" class="block text-sm font-medium text-gray-700 mb-1">Guide Assigned</label>
-                        <select name="user_id" id="user_id" class="w-full border-gray-300 rounded-md shadow-sm">
-                            {{-- Si el controlador pide 'required', esta opción dará error si se elige --}}
+                        <select name="user_id" id="user_id" class="w-full border-gray-300 rounded-md shadow-sm @error('user_id') border-red-500 @enderror">
                             <option value="">Select a guide...</option> 
                             @foreach($guides as $guide)
                                 <option value="{{ $guide->id }}" {{ old('user_id', $meeting->user_id) == $guide->id ? 'selected' : '' }}>

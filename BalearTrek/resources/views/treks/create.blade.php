@@ -14,20 +14,20 @@
                     <div class="mb-4">
                         <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Title of the Trek</label>
                         <input type="text" name="name" id="name" value="{{ old('name') }}" 
-                            class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+                            class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 @error('name') border-red-500 @enderror">
                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
                     </div>
                     <div class="mb-4">
                         <label for="regNumber" class="block text-sm font-medium text-gray-700 mb-1">Registration Number</label>
                         <input type="text" name="regNumber" id="regNumber" value="{{ old('regNumber') }}" 
-                            class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+                            class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 @error('regNumber') border-red-500 @enderror">
                         <x-input-error :messages="$errors->get('regNumber')" class="mt-2" />
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div class="mb-4">
                             <x-input-label for="municipality_id" value="Municipality" />
                             <select id="municipality_id" name="municipality_id"
-                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 @error('municipality_id') border-red-500 @enderror">
                                 <option value="" disabled selected>Select a municipality</option>
                                 @foreach ($municipalities as $municipality)
                                     <option value="{{ $municipality->id }}"
@@ -43,7 +43,7 @@
                             <label class="block text-sm font-medium text-gray-700 mb-1">Interesting Places</label>
                             <div class="grid grid-cols-2 gap-2 mt-2">
                                 @foreach ($places as $place)
-                                    <label class="flex items-center gap-2 text-sm text-gray-600">
+                                            <label class="flex items-center gap-2 text-sm text-gray-600">
                                         <input type="checkbox"
                                             name="interesting_places[]"
                                             value="{{ $place->id }}"

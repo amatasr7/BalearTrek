@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Municipality;
 use App\Models\Island;
 use App\Models\Zone;
-use App\Models\PlaceType;
-use Illuminate\Http\Request;
+use App\Http\Requests\MunicipalityRequest;
 
 class MunicipalityController extends Controller
 {
@@ -30,15 +29,9 @@ class MunicipalityController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(MunicipalityRequest $request)
     {
-        $request->validate([
-            'name' => 'required|max:100',
-            'island_id' => 'required|exists:islands,id',
-            'zone_id' => 'required|exists:zones,id',
-        ]);
-
-        Municipality::create($request->all());
+        Municipality::create($request->validated());
         return redirect()->route('municipis.index')->with('success', 'Municipi creat!');
     }
 
@@ -66,20 +59,10 @@ class MunicipalityController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-{
-    // 1. Validamos los datos primero
-    $request->validate([
-        'name' => 'required|string|max:100',
-        'island_id' => 'required|exists:islands,id',
-        'zone_id' => 'required|exists:zones,id',
-    ]);
-
-    // 2. BUSCAMOS el municipio usando el ID que recibimos
-    $municipi = Municipality::findOrFail($id);
-
-    // 3. AHORA SÍ podemos actualizarlo
-    $municipi->update($request->all());
+    public function update(MunicipalityRequest $request, string $id)
+    {
+        $municipi = Municipality::findOrFail($id);
+        $municipi->update($request->validated());
 
     return redirect()->route('municipis.index')
         ->with('success', 'Municipi actualitzat correctament.');
@@ -88,7 +71,7 @@ class MunicipalityController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(municipality $municipi)
+    public function destroy(Municipality $municipi)
     {
         try {
             $municipi->delete();

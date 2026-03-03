@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 use App\Models\Trek;
 use App\Models\Municipality;
 use App\Models\InterestingPlace;
-use Illuminate\Http\Request;
+use App\Http\Requests\TrekStoreRequest;
+use App\Http\Requests\TrekUpdateRequest;
+use Illuminate\Support\Arr;
 
 class TrekController extends Controller
 {
@@ -21,21 +23,12 @@ class TrekController extends Controller
         return view('treks.create', compact('municipalities', 'places'));
     }
 
-    public function store(Request $request)
-{
-    $request->validate([
-        'regNumber' => 'required|unique:treks|max:20',
-        'name' => 'required|max:100',
-        'description' => 'nullable|string',
-        'municipality_id' => 'required|exists:municipalities,id',
-        'interesting_places' => 'required|array',
-        'difficulty' => 'nullable|string',
-    ]);
-
-    // 1. Creamos la Trek con TODOS los campos necesarios
-    $trek = Trek::create($request->only([
-        'regNumber', 'name', 'description', 'municipality_id', 'difficulty'
-    ]));
+    public function store(TrekStoreRequest $request)
+    {
+        $data = $request->validated();
+        $trek = Trek::create(
+            Arr::only($data, ['regNumber', 'name', 'description', 'municipality_id', 'difficulty'])
+        );
 
     // 2. Preparamos los IDs 
     $placesWithOrder = collect($request->input('interesting_places'))->mapWithKeys(function ($id) {
@@ -57,19 +50,11 @@ class TrekController extends Controller
         return view('treks.edit', compact('trek', 'municipalities', 'places'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(TrekUpdateRequest $request, string $id)
     {
         $trek = Trek::findOrFail($id);
-
-        $request->validate([
-            'regNumber' => 'required|max:20|unique:treks,regNumber,' . $id,
-            'name' => 'required|max:100',
-            'description' => 'nullable|string',
-            'municipality_id' => 'required|exists:municipalities,id',
-            'places' => 'required|array'
-        ]);
-
-        $trek->update($request->only(['regNumber', 'name', 'description', 'municipality_id']));
+        $data = $request->validated();
+        $trek->update(Arr::only($data, ['regNumber', 'name', 'description', 'municipality_id']));
 
         // 4. Preparamos los IDs de los lugares para la tabla pivote con 'order' = 0
         $placesWithOrder = collect($request->input('places'))->mapWithKeys(function ($id) {

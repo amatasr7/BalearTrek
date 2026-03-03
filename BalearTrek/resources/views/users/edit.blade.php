@@ -13,25 +13,29 @@
                         {{-- Name --}}
                         <div>
                             <label class="block font-bold text-gray-700 uppercase text-xs mb-2">First Name</label>
-                            <input type="text" name="name" value="{{ old('name', $user->name) }}" class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                            <input type="text" name="name" value="{{ old('name', $user->name) }}" class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 @error('name') border-red-500 @enderror">
+                            @error('name')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
                         </div>
                         <br>
                         {{-- Lastname --}}
                         <div>
                             <label class="block font-bold text-gray-700 uppercase text-xs mb-2">Last Name</label>
-                            <input type="text" name="lastname" value="{{ old('lastname', $user->lastname) }}" class="w-full border-gray-300 rounded-md shadow-sm">
+                            <input type="text" name="lastname" value="{{ old('lastname', $user->lastname) }}" class="w-full border-gray-300 rounded-md shadow-sm @error('lastname') border-red-500 @enderror">
+                            @error('lastname')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
                         </div>
                         <br>
                         {{-- Email --}}
                         <div>
                             <label class="block font-bold text-gray-700 uppercase text-xs mb-2">Email Address</label>
-                            <input type="email" name="email" value="{{ old('email', $user->email) }}" class="w-full border-gray-300 rounded-md shadow-sm">
+                            <input type="email" name="email" value="{{ old('email', $user->email) }}" class="w-full border-gray-300 rounded-md shadow-sm @error('email') border-red-500 @enderror">
+                            @error('email')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
                         </div>
                         <br>
                         {{-- Role ID --}}
                         <div>
                             <label class="block font-bold text-gray-700 uppercase text-xs mb-2">Role ID</label>
-                            <input type="number" name="role_id" value="{{ old('role_id', $user->role_id) }}" class="w-full border-gray-300 rounded-md shadow-sm">
+                            <input type="number" name="role_id" value="{{ old('role_id', $user->role_id) }}" class="w-full border-gray-300 rounded-md shadow-sm @error('role_id') border-red-500 @enderror">
+                            @error('role_id')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
                         </div>
                     </div>
 

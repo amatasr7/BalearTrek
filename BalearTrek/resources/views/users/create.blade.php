@@ -11,19 +11,23 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block font-bold text-gray-700 uppercase text-xs mb-2">Name</label>
-                            <input type="text" name="name" class="w-full border-gray-300 rounded-md shadow-sm" required>
+                            <input type="text" name="name" value="{{ old('name') }}" class="w-full border-gray-300 rounded-md shadow-sm @error('name') border-red-500 @enderror">
+                            @error('name')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
                         </div>
                         <div>
                             <label class="block font-bold text-gray-700 uppercase text-xs mb-2">Email</label>
-                            <input type="email" name="email" class="w-full border-gray-300 rounded-md shadow-sm" required>
+                            <input type="email" name="email" value="{{ old('email') }}" class="w-full border-gray-300 rounded-md shadow-sm @error('email') border-red-500 @enderror">
+                            @error('email')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
                         </div>
                         <div>
                             <label class="block font-bold text-gray-700 uppercase text-xs mb-2">Password</label>
-                            <input type="password" name="password" class="w-full border-gray-300 rounded-md shadow-sm" required>
+                            <input type="password" name="password" class="w-full border-gray-300 rounded-md shadow-sm @error('password') border-red-500 @enderror">
+                            @error('password')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
                         </div>
                         <div>
                             <label class="block font-bold text-gray-700 uppercase text-xs mb-2">Role ID</label>
-                            <input type="number" name="role_id" value="2" class="w-full border-gray-300 rounded-md shadow-sm">
+                            <input type="number" name="role_id" value="{{ old('role_id', 2) }}" class="w-full border-gray-300 rounded-md shadow-sm @error('role_id') border-red-500 @enderror">
+                            @error('role_id')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
                         </div>
                     </div>
 

@@ -33,13 +33,13 @@ class UserRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => "Has d'informar un nom",
-            'lastname.required' => "Has d'informar un llinatge",
-            'dni.required' => "Has d'informar un DNI",
-            'email.required' => "Has d'informar un email",
-            'phone.required' => "Has d'informar un telèfon",
-            'dni.unique' => "El DNI ja està registrat",
-            'email.unique' => "L'email ja està registrat",
+            'name.required' => 'Name is required.',
+            'lastname.required' => 'Last name is required.',
+            'dni.required' => 'DNI is required.',
+            'email.required' => 'Email is required.',
+            'phone.required' => 'Phone number is required.',
+            'dni.unique' => 'This DNI is already registered.',
+            'email.unique' => 'This email is already registered.',
         ];
     }
 }

@@ -15,18 +15,32 @@
                     <div class="mb-4">
                         <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name of the Municipality</label>
                         <input type="text" name="name" id="name" value="{{ old('name', $municipi->name) }}" 
-                            class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                            class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 @error('name') border-red-500 @enderror">
+                        <x-input-error :messages="$errors->get('name')" class="mt-2" />
                     </div>
 
                     <div class="mb-4">
                         <label for="island_id" class="block text-sm font-medium text-gray-700 mb-1">Island</label>
-                        <select name="island_id" id="island_id" class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <select name="island_id" id="island_id" class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 @error('island_id') border-red-500 @enderror">
                             @foreach($islands as $island)
-                                <option value="{{ $island->id }}" {{ $municipi->island_id == $island->id ? 'selected' : '' }}>
+                                <option value="{{ $island->id }}" {{ old('island_id', $municipi->island_id) == $island->id ? 'selected' : '' }}>
                                     {{ $island->name }}
                                 </option>
                             @endforeach
                         </select>
+                        <x-input-error :messages="$errors->get('island_id')" class="mt-2" />
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="zone_id" class="block text-sm font-medium text-gray-700 mb-1">Zone</label>
+                        <select name="zone_id" id="zone_id" class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 @error('zone_id') border-red-500 @enderror">
+                            @foreach($zones as $zone)
+                                <option value="{{ $zone->id }}" {{ old('zone_id', $municipi->zone_id) == $zone->id ? 'selected' : '' }}>
+                                    {{ $zone->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <x-input-error :messages="$errors->get('zone_id')" class="mt-2" />
                     </div>
 
                     <div class="flex items-center justify-start mt-6">

@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\InterestingPlace;
 use App\Models\PlaceType;
-use Illuminate\Http\Request;
+use App\Http\Requests\InterestingPlaceStoreRequest;
+use App\Http\Requests\InterestingPlaceUpdateRequest;
 
 class InterestingPlaceController extends Controller
 {
@@ -24,16 +25,9 @@ class InterestingPlaceController extends Controller
         return view('interesting_places.create', compact('types'));
     }
 
-    public function store(Request $request)
+    public function store(InterestingPlaceStoreRequest $request)
     {
-        $request->validate([
-            'name' => 'required|max:100',
-            'gps' => 'required|unique:interesting_places',
-            'place_type_id' => 'required|exists:place_types,id',
-            'description' => 'nullable|string',
-        ]);
-
-        InterestingPlace::create($request->all());
+        InterestingPlace::create($request->validated());
         return redirect()->route('interesting-places.index')->with('success', 'Lloc creat correctament!');
     }
 
@@ -43,16 +37,9 @@ class InterestingPlaceController extends Controller
         return view('interesting_places.edit', compact('interestingPlace', 'types'));
     }
 
-    public function update(Request $request, InterestingPlace $interestingPlace)
+    public function update(InterestingPlaceUpdateRequest $request, InterestingPlace $interestingPlace)
     {
-        $request->validate([
-            'name' => 'required|max:100',
-            'gps' => 'required|unique:interesting_places,gps,' . $interestingPlace->id,
-            'place_type_id' => 'required|exists:place_types,id',
-            'description' => 'nullable|string',
-        ]);
-
-        $interestingPlace->update($request->all());
+        $interestingPlace->update($request->validated());
         return redirect()->route('interesting-places.index')->with('success', 'Actualitzat!');
     }
 

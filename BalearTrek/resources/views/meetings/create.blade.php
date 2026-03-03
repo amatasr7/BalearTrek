@@ -16,7 +16,7 @@
                         
                         <div>
                             <label for="user_id" class="block text-sm font-medium text-gray-700 mb-1">Guide</label>
-                            <select name="user_id" id="user_id" class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+                            <select name="user_id" id="user_id" class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 @error('user_id') border-red-500 @enderror">
                                 <option value="">Select a guide</option>
                                 @foreach($guides as $guide)
                                     <option value="{{ $guide->id }}" {{ old('user_id') == $guide->id ? 'selected' : '' }}>
@@ -29,7 +29,7 @@
 
                         <div>
                             <label for="trek_id" class="block text-sm font-medium text-gray-700 mb-1">Trek</label>
-                            <select name="trek_id" id="trek_id" class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+                            <select name="trek_id" id="trek_id" class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 @error('trek_id') border-red-500 @enderror">
                                 <option value="">Select a trek</option>
                                 @foreach($treks as $trek)
                                     <option value="{{ $trek->id }}" {{ old('trek_id') == $trek->id ? 'selected' : '' }}>
@@ -43,27 +43,29 @@
                         <div>
                             <label for="day" class="block text-sm font-medium text-gray-700 mb-1">Meeting Day</label>
                             <input type="date" name="day" id="day" value="{{ old('day') }}" 
-                                class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+                                class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 @error('day') border-red-500 @enderror">
                             @error('day') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                         </div>
 
                         <div>
                             <label for="time" class="block text-sm font-medium text-gray-700 mb-1">Meeting Time</label>
                             <input type="time" name="time" id="time" value="{{ old('time') }}" 
-                                class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+                                class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 @error('time') border-red-500 @enderror">
                             @error('time') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                         </div>
 
                         <div>
                             <label for="appDateIni" class="block text-sm font-medium text-gray-700 mb-1">Application Starts</label>
                             <input type="date" name="appDateIni" id="appDateIni" value="{{ old('appDateIni') }}" 
-                                class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+                                class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 @error('appDateIni') border-red-500 @enderror">
+                            @error('appDateIni')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
                         </div>
 
                         <div>
                             <label for="appDateEnd" class="block text-sm font-medium text-gray-700 mb-1">Application Ends</label>
                             <input type="date" name="appDateEnd" id="appDateEnd" value="{{ old('appDateEnd') }}" 
-                                class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+                                class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 @error('appDateEnd') border-red-500 @enderror">
+                            @error('appDateEnd')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
                         </div>
 
                     </div>
