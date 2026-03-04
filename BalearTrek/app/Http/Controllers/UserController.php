@@ -11,7 +11,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::paginate(10);
+        $users = User::orderBy('created_at', 'desc')->paginate(10);
         return view('users.index', compact('users'));
     }
 
@@ -34,7 +34,7 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
 
-    // Método SHOW (El que te falta según el error)
+    
     public function show(User $user)
     {
         return view('users.show', compact('user'));
